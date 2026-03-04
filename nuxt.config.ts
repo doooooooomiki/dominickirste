@@ -10,6 +10,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  css: ['~/assets/css/main.css'],
+  features: {
+    inlineStyles: false,
+  },
   compatibilityDate: '2025-07-15',
   eslint: {
     config: {
@@ -22,5 +26,8 @@ export default defineNuxtConfig({
         braceStyle: '1tbs',
       },
     },
+  },
+  fonts: {
+    families: [{ name: 'Geist', provider: 'google', weight: '900' }],
   },
 })

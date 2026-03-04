@@ -1,3 +1,5 @@
 <template>
-  <div>hi.</div>
+  <main>
+    <HeroSection />
+  </main>
 </template>
