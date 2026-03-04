@@ -11,10 +11,10 @@ let ctx: gsap.Context
 onMounted(() => {
   if (!section.value || !surname.value || !familyname.value || !trademark.value) return
 
-  const splitSurname = SplitText.create(surname.value, { type: 'chars' })
-  const splitFamilyname = SplitText.create(familyname.value, { type: 'chars' })
-
   ctx = gsap.context(() => {
+    const splitSurname = SplitText.create(surname.value, { type: 'chars' })
+    const splitFamilyname = SplitText.create(familyname.value, { type: 'chars' })
+
     gsap.timeline()
       .from(splitSurname.chars, {
         y: 20,
@@ -46,6 +46,9 @@ onUnmounted(() => {
     <NuxtImg
       class="hero-image"
       src="/dominickirste.jpg"
+      sizes="sm:800px md:1600px lg:3200px"
+      :placeholder="[50, 25, 75, 5]"
+      quality="100"
     />
     <div class="hero-content">
       <h1 class="title prose-h1">
@@ -121,6 +124,7 @@ onUnmounted(() => {
   }
 
   & .title {
+    text-transform: uppercase;
     color: var(--color-primary);
     font-size: var(--prose);
     font-weight: 900;
@@ -130,7 +134,6 @@ onUnmounted(() => {
     flex-direction: column;
     align-items: end;
     place-self: end;
-    /* margin-bottom: 3rem; */
   }
 
   & .trademark {
