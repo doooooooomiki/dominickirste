@@ -1,43 +1,62 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
+import { useResizeObserver } from '@vueuse/core'
 
 gsap.registerPlugin(SplitText)
 
-const section = useTemplateRef<Element>('section')
+const section = useTemplateRef('section')
+const h1 = useTemplateRef('h1')
 const surname = useTemplateRef('surname')
 const familyname = useTemplateRef('familyname')
-const trademark = useTemplateRef('trademark')
 let ctx: gsap.Context
 
-onMounted(() => {
-  if (!section.value || !surname.value || !familyname.value || !trademark.value) return
+const fitty = (container: HTMLElement | null, text: HTMLElement | null) => {
+  if (!container || !text) return
+  const fontSize = (container.offsetWidth / (text.offsetWidth)) * parseFloat(getComputedStyle(text).fontSize)
+  text.style.fontSize = fontSize + 'px'
+}
+
+const setupGsap = () => {
+  if (!section.value || !h1.value || !surname.value || !familyname.value) return
 
   ctx = gsap.context(() => {
     const splitSurname = SplitText.create(surname.value, { type: 'chars' })
+    gsap.set(splitSurname.chars, {
+      y: 20,
+      autoAlpha: 0,
+      onComplete: () => fitty(h1.value, surname.value),
+    })
+
     const splitFamilyname = SplitText.create(familyname.value, { type: 'chars' })
+    gsap.set(splitFamilyname.chars, {
+      y: 20,
+      autoAlpha: 0,
+      onComplete: () => fitty(h1.value, familyname.value),
+    })
 
     gsap.timeline()
-      .from(splitSurname.chars, {
-        y: 20,
-        autoAlpha: 0,
+      .to(splitSurname.chars, {
+        y: 0,
+        autoAlpha: 1,
         stagger: 0.12,
       }, 0.4)
-      .from(splitFamilyname.chars, {
-        y: 20,
-        autoAlpha: 0,
+      .to(splitFamilyname.chars, {
+        y: 0,
+        autoAlpha: 1,
         stagger: 0.12,
       }, '<0.2')
-      .from(trademark.value, {
-        y: -20,
-        autoAlpha: 0,
-      }, '>0.2')
   }, section.value)
+}
+
+useResizeObserver(section, () => {
+  fitty(h1.value, surname.value)
+  fitty(h1.value, familyname.value)
 })
 
-onUnmounted(() => {
-  ctx.revert()
-})
+onMounted(() => setupGsap())
+
+onUnmounted(() => ctx.revert())
 </script>
 
 <template>
@@ -54,47 +73,41 @@ onUnmounted(() => {
       @load="(e) => console.log(e)"
     />
     <div class="hero-content layout-center layout-cover">
-      <h1>
-        <img
-          ref="trademark"
-          class="trademark prose-trademark"
-          src="/trademark.svg"
+      <h1
+        ref="h1"
+        class="dynamic-container"
+      >
+        <div
+          ref="surname"
+          class="dynamic-text"
         >
-        <div ref="surname">
           Dominic
         </div>
-        <div ref="familyname">
+        <div
+          ref="familyname"
+          class="dynamic-text"
+        >
           Kirste
         </div>
       </h1>
-      <ul class="links">
-        <li>
-          <NuxtLink
-            class="link"
-            to="https://github.com/doooooooomiki"
-            target="_blank"
-          >github</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink
-            class="link"
-            to="https://bsky.app/profile/doooooooomiki.bsky.social"
-            target="_blank"
-          >bluesky</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink
-            class="link"
-            to="https://www.linkedin.com/in/dominic-kirste"
-            target="_blank"
-          >linkedin</NuxtLink>
-        </li>
-      </ul>
     </div>
   </section>
 </template>
 
 <style>
+.dynamic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dynamic-text {
+    white-space: nowrap;
+    font-weight: 900;
+    line-height: 1;
+}
+
 .hero {
   display: grid;
   grid-template-areas: 'hero';
@@ -110,23 +123,6 @@ onUnmounted(() => {
 
   & .hero-content {
     grid-area: hero;
-  }
-
-  & .trademark {
-    width: var(--step-5);
-    height: var(--step-5);
-  }
-
-  & .links {
-    order: -1;
-    margin: unset;
-    padding: unset;
-    list-style-type: none;
-    font-size: 2rem;
-
-    & .link {
-      color: var(--color-primary);
-    }
   }
 }
 </style>
