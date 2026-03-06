@@ -2,6 +2,8 @@
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 
+gsap.registerPlugin(SplitText)
+
 const section = useTemplateRef<Element>('section')
 const surname = useTemplateRef('surname')
 const familyname = useTemplateRef('familyname')
@@ -49,9 +51,10 @@ onUnmounted(() => {
       sizes="sm:800px md:1600px lg:3200px"
       :placeholder="[50, 25, 75, 5]"
       quality="100"
+      @load="(e) => console.log(e)"
     />
-    <div class="hero-content">
-      <h1 class="title prose-h1">
+    <div class="hero-content layout-center layout-cover">
+      <h1>
         <img
           ref="trademark"
           class="trademark prose-trademark"
@@ -92,19 +95,6 @@ onUnmounted(() => {
 </template>
 
 <style>
-.prose-h1 {
-  --prose: 4rem;
-  @media (width >= 40rem) { --prose: 8rem; }
-  @media (width >= 64rem) { --prose: 12rem; }
-  @media (width >= 80rem) { --prose: 16rem; }
-}
-
-.prose-trademark {
-  --prose: 2rem;
-  @media (width >= 40rem) { --prose: 4rem; }
-  @media (width >= 64rem) { --prose: 8rem; }
-}
-
 .hero {
   display: grid;
   grid-template-areas: 'hero';
@@ -118,27 +108,11 @@ onUnmounted(() => {
 
   & .hero-content {
     grid-area: hero;
-    padding: 2rem;
-    padding-bottom: 4rem;
-    display: grid;
-  }
-
-  & .title {
-    text-transform: uppercase;
-    color: var(--color-primary);
-    font-size: var(--prose);
-    font-weight: 900;
-    margin: unset;
-    line-height: 0.8;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    place-self: end;
   }
 
   & .trademark {
-    width: var(--prose);
-    height: var(--prose);
+    width: var(--step-5);
+    height: var(--step-5);
   }
 
   & .links {
@@ -146,7 +120,6 @@ onUnmounted(() => {
     margin: unset;
     padding: unset;
     list-style-type: none;
-    place-self: start;
     font-size: 2rem;
 
     & .link {
