@@ -2,37 +2,31 @@
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { useResizeObserver } from '@vueuse/core'
+import fitty from 'fitty'
 
 gsap.registerPlugin(SplitText)
 
 const section = useTemplateRef('section')
-const h1 = useTemplateRef('h1')
-const surname = useTemplateRef('surname')
-const familyname = useTemplateRef('familyname')
+const surname = useTemplateRef<HTMLElement>('surname')
+const familyname = useTemplateRef<HTMLElement>('familyname')
 let ctx: gsap.Context
 
-const fitty = (container: HTMLElement | null, text: HTMLElement | null) => {
-  if (!container || !text) return
-  const fontSize = (container.offsetWidth / (text.offsetWidth)) * parseFloat(getComputedStyle(text).fontSize)
-  text.style.fontSize = fontSize + 'px'
-}
-
 const setupGsap = () => {
-  if (!section.value || !h1.value || !surname.value || !familyname.value) return
+  if (!section.value || !surname.value || !familyname.value) return
 
   ctx = gsap.context(() => {
     const splitSurname = SplitText.create(surname.value, { type: 'chars' })
     gsap.set(splitSurname.chars, {
       y: 20,
       autoAlpha: 0,
-      onComplete: () => fitty(h1.value, surname.value),
+      onComplete: () => { if (surname.value) fitty(surname.value, { minSize: 1 }) },
     })
 
     const splitFamilyname = SplitText.create(familyname.value, { type: 'chars' })
     gsap.set(splitFamilyname.chars, {
       y: 20,
       autoAlpha: 0,
-      onComplete: () => fitty(h1.value, familyname.value),
+      onComplete: () => { if (familyname.value) fitty(familyname.value, { minSize: 1 }) },
     })
 
     gsap.timeline()
@@ -50,8 +44,7 @@ const setupGsap = () => {
 }
 
 useResizeObserver(section, () => {
-  fitty(h1.value, surname.value)
-  fitty(h1.value, familyname.value)
+  fitty.fitAll()
 })
 
 onMounted(() => setupGsap())
@@ -73,19 +66,16 @@ onUnmounted(() => ctx.revert())
       @load="(e) => console.log(e)"
     />
     <div class="hero-content layout-center layout-cover">
-      <h1
-        ref="h1"
-        class="dynamic-container"
-      >
+      <h1>
         <div
           ref="surname"
-          class="dynamic-text"
+          class="fit"
         >
           Dominic
         </div>
         <div
           ref="familyname"
-          class="dynamic-text"
+          class="fit"
         >
           Kirste
         </div>
@@ -95,34 +85,23 @@ onUnmounted(() => ctx.revert())
 </template>
 
 <style>
-.dynamic-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.dynamic-text {
-    white-space: nowrap;
-    font-weight: 900;
-    line-height: 1;
-}
-
 .hero {
-  display: grid;
-  grid-template-areas: 'hero';
+  position: relative;
+  width: 100%;
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+  max-block-size: 100vh;
 
   & .hero-image {
-    grid-area: hero;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    min-block-size: 100vh;
-    min-block-size: 100svh;
-    max-block-size: 100vh;
+    height: 100%;
     object-fit: cover;
   }
 
   & .hero-content {
-    grid-area: hero;
+    position: relative;
   }
 }
 </style>
