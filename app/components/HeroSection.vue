@@ -102,7 +102,9 @@ onUnmounted(() => {
   & .hero-image {
     grid-area: hero;
     width: 100%;
-    height: 100dvh;
+    min-block-size: 100vh;
+    min-block-size: 100svh;
+    max-block-size: 100vh;
     object-fit: cover;
   }
 
