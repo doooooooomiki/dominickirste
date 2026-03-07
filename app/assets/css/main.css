@@ -75,7 +75,7 @@ p {
   }
   
   & > h1 {
-   margin-block: auto;
+   margin-block-start: auto;
   }
 }
 

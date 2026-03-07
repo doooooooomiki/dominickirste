@@ -43,9 +43,7 @@ const setupGsap = () => {
   }, section.value)
 }
 
-useResizeObserver(section, () => {
-  fitty.fitAll()
-})
+useResizeObserver(section, () => fitty.fitAll())
 
 onMounted(() => setupGsap())
 
