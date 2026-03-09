@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useResizeObserver } from '@vueuse/core'
-
-gsap.registerPlugin(ScrollTrigger, SplitText)
 
 const section = useTemplateRef('section')
 const hi = useTemplateRef('hi')

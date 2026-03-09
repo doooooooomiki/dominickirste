@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const section = useTemplateRef('section')
 const wrapper = useTemplateRef('wrapper')

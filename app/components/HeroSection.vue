@@ -4,11 +4,9 @@ import { SplitText } from 'gsap/SplitText'
 import { useResizeObserver } from '@vueuse/core'
 import fitty from 'fitty'
 
-gsap.registerPlugin(SplitText)
-
 const section = useTemplateRef('section')
-const surname = useTemplateRef<HTMLElement>('surname')
-const familyname = useTemplateRef<HTMLElement>('familyname')
+const surname = useTemplateRef('surname')
+const familyname = useTemplateRef('familyname')
 let ctx: gsap.Context
 
 const setupGsap = () => {
