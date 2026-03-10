@@ -8,9 +8,12 @@ const section = useTemplateRef('section')
 const surname = useTemplateRef('surname')
 const familyname = useTemplateRef('familyname')
 let ctx: gsap.Context
+let timelineHeading: gsap.core.Timeline
 
 const setupGsap = () => {
   if (!section.value || !surname.value || !familyname.value) return
+
+  timelineHeading = gsap.timeline().pause()
 
   ctx = gsap.context(() => {
     const splitSurname = SplitText.create(surname.value, { type: 'chars' })
@@ -27,7 +30,7 @@ const setupGsap = () => {
       onComplete: () => { if (familyname.value) fitty(familyname.value, { minSize: 1 }) },
     })
 
-    gsap.timeline()
+    timelineHeading
       .to(splitSurname.chars, {
         y: 0,
         autoAlpha: 1,
@@ -40,6 +43,8 @@ const setupGsap = () => {
       }, '<0.2')
   }, section.value)
 }
+
+const playTimelineHeading = () => timelineHeading.play()
 
 useResizeObserver(section, () => fitty.fitAll())
 
@@ -59,7 +64,7 @@ onUnmounted(() => ctx.revert())
       sizes="sm:800px md:1600px lg:3200px"
       :placeholder="[50, 25, 75, 5]"
       quality="100"
-      @load="(e) => console.log(e)"
+      @load="playTimelineHeading"
     />
     <div class="hero-content layout-center layout-cover">
       <h1>
