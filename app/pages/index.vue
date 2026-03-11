@@ -13,6 +13,7 @@ let ctx: gsap.Context
 const setupGsap = () => {
   if (!wrapper.value) return
   ctx = gsap.context(() => {
+    if (!wrapper.value || !content.value) return
     ScrollSmoother.create({
       wrapper: wrapper.value,
       content: content.value,

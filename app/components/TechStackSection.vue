@@ -5,7 +5,9 @@ const wrapper = useTemplateRef('tech-stack-wrapper')
 const gallery = useTemplateRef('tech-stack-gallery')
 let ctx: gsap.Context
 
-onMounted(() => {
+const setupGsap = () => {
+  if (!wrapper.value) return
+
   ctx = gsap.context(() => {
     if (!wrapper.value || !gallery.value) return
 
@@ -52,8 +54,10 @@ onMounted(() => {
         },
       })
     })
-  })
-})
+  }, wrapper.value)
+}
+
+onMounted(() => setupGsap())
 
 onUnmounted(() => ctx.revert())
 </script>
