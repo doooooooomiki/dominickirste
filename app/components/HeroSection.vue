@@ -8,12 +8,9 @@ const section = useTemplateRef('section')
 const surname = useTemplateRef('surname')
 const familyname = useTemplateRef('familyname')
 let ctx: gsap.Context
-let timelineHeading: gsap.core.Timeline
 
 const setupGsap = () => {
   if (!section.value || !surname.value || !familyname.value) return
-
-  timelineHeading = gsap.timeline().pause()
 
   ctx = gsap.context(() => {
     const splitSurname = SplitText.create(surname.value, { type: 'chars' })
@@ -22,6 +19,9 @@ const setupGsap = () => {
       autoAlpha: 0,
       onComplete: () => { if (surname.value) fitty(surname.value, { minSize: 1 }) },
     })
+    gsap.set(surname.value, {
+      autoAlpha: 1,
+    })
 
     const splitFamilyname = SplitText.create(familyname.value, { type: 'chars' })
     gsap.set(splitFamilyname.chars, {
@@ -29,8 +29,11 @@ const setupGsap = () => {
       autoAlpha: 0,
       onComplete: () => { if (familyname.value) fitty(familyname.value, { minSize: 1 }) },
     })
+    gsap.set(familyname.value, {
+      autoAlpha: 1,
+    })
 
-    timelineHeading
+    gsap.timeline()
       .to(splitSurname.chars, {
         y: 0,
         autoAlpha: 1,
@@ -43,8 +46,6 @@ const setupGsap = () => {
       }, '<0.2')
   }, section.value)
 }
-
-const playTimelineHeading = () => timelineHeading.play()
 
 useResizeObserver(section, () => fitty.fitAll())
 
@@ -64,19 +65,18 @@ onUnmounted(() => ctx.revert())
       sizes="sm:800px md:1600px lg:3200px"
       :placeholder="[50, 25, 75, 5]"
       quality="100"
-      @load="playTimelineHeading"
     />
     <div class="hero-content layout-center layout-cover">
       <h1>
         <div
           ref="surname"
-          class="fit"
+          class="surname fit"
         >
           Dominic
         </div>
         <div
           ref="familyname"
-          class="fit"
+          class="familyname fit"
         >
           Kirste
         </div>
@@ -92,6 +92,7 @@ onUnmounted(() => ctx.revert())
   min-block-size: 100vh;
   min-block-size: 100svh;
   max-block-size: 100vh;
+  background-color: #84807f;
 
   & .hero-image {
     position: absolute;
@@ -103,6 +104,11 @@ onUnmounted(() => ctx.revert())
 
   & .hero-content {
     position: relative;
+  }
+
+  & .surname,
+  & .familyname {
+    opacity: 0;
   }
 }
 </style>
