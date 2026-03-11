@@ -70,13 +70,13 @@ onUnmounted(() => ctx.revert())
       <h1>
         <div
           ref="surname"
-          class="surname fit"
+          class="surname"
         >
           Dominic
         </div>
         <div
           ref="familyname"
-          class="familyname fit"
+          class="familyname"
         >
           Kirste
         </div>

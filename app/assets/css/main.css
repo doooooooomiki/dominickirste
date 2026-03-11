@@ -16,7 +16,15 @@
   --step-3: clamp(1.944rem, 1.4088rem + 2.3785vw, 3.9063rem);
   --step-4: clamp(2.3328rem, 1.6373rem + 3.0909vw, 4.8828rem);
   --step-5: clamp(2.7994rem, 1.4821rem + 5.8546vw, 7.6294rem);
+
+  /* @link https://utopia.fyi/space/calculator?c=360,24,1.2,1680,64,1.25,5,2,&s=0.75,1.5|2|3,s-l&g=s,l,xl,12 */
+  --space-xs: clamp(1.125rem, 0.6136rem + 2.2727vw, 3rem);
+  --space-s: clamp(1.5rem, 0.8182rem + 3.0303vw, 4rem);
+  --space-m: clamp(2.25rem, 1.2273rem + 4.5455vw, 6rem);
+  --space-l: clamp(3rem, 1.6364rem + 6.0606vw, 8rem);
+  --space-xl: clamp(4.5rem, 2.4545rem + 9.0909vw, 12rem);
 }
+
 
 body {
   font-family: Geist, sans-serif;
@@ -28,7 +36,8 @@ img {
   display: block;
 }
 
-h1 {
+h1,
+h2 {
   font-family: "Rubik Mono One", monospace;
   /* font-size: var(--step-5); */
   font-size: 4rem;
@@ -40,7 +49,7 @@ h1 {
 
 p {
   margin: unset;
-  font-size: var(--step-4);
+  font-size: var(--step-5);
 }
 
   /* @link https://every-layout.dev/layouts/stack/ */
@@ -48,12 +57,10 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  & > * {
-    margin-block: 0;
+  & > *:not(.hero) {
+    padding-block: var(--space-xl);
   }
-  & > * + * {
-    margin-block-start: var(--space, 1.5rem);
-  }
+
 }
 
   /* @link https://every-layout.dev/layouts/cover/ */ 

@@ -30,19 +30,19 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <main
-    ref="smooth-wrapper"
-    class="layout-stack"
-  >
-    <div ref="smooth-content">
+  <div ref="smooth-wrapper">
+    <main
+      ref="smooth-content"
+      class="layout-stack"
+    >
       <HeroSection />
       <MotivationLetterSection />
       <TechStackSection />
       <section class="spacer">
         <hr>
       </section>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <style>

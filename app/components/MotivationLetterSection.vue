@@ -18,7 +18,7 @@ const setupGsap = () => {
         stagger: 0.2,
         scrollTrigger: {
           trigger: hi.value,
-          start: 'top 75%',
+          start: 'top 50%',
           end: 'bottom 80%',
           scrub: 1,
         },

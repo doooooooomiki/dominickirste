@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
+import fitty from 'fitty'
 
 const wrapper = useTemplateRef('tech-stack-wrapper')
 const gallery = useTemplateRef('tech-stack-gallery')
+
 let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!wrapper.value) return
+
+  fitty('.fit')
 
   ctx = gsap.context(() => {
     if (!wrapper.value || !gallery.value) return
@@ -65,6 +69,17 @@ onUnmounted(() => ctx.revert())
 <template>
   <section class="tech-stack-section">
     <div class="layout-center">
+      <h2>
+        <div class="fit">
+          Wellen
+        </div>
+        <div class="fit">
+          die ich
+        </div>
+        <div class="fit">
+          surfe
+        </div>
+      </h2>
       <div
         ref="tech-stack-wrapper"
         class="cards-wrapper"
@@ -73,88 +88,52 @@ onUnmounted(() => ctx.revert())
           ref="tech-stack-gallery"
           class="cards"
         >
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-1.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Neon Waves</h2>
-              </div>
+          <div class="card card--html">
+            <h3>HTML</h3>
+            <div class="card-img-container">
+              <img src="/html.png">
             </div>
           </div>
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-2.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Velvet Drift</h2>
-              </div>
+          <div class="card card--css">
+            <h3>CSS</h3>
+            <div class="card-img-container">
+              <img src="/css3.png">
             </div>
           </div>
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-3.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Echo Flame</h2>
-              </div>
+          <div class="card card--tailwind">
+            <h3>TAIL<br>WIND</h3>
+            <div class="card-img-container">
+              <img src="/tailwind.png">
             </div>
           </div>
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-4.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Phantom Beat</h2>
-              </div>
+          <div class="card card--js">
+            <h3>JAVA<br>SCRIPT</h3>
+            <div class="card-img-container">
+              <img src="/javascript.png">
             </div>
           </div>
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-5.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Crystal Tide</h2>
-              </div>
+          <div class="card card--ts">
+            <h3>TYPE<br>SCRIPT</h3>
+            <div class="card-img-container">
+              <img src="/typescript.png">
             </div>
           </div>
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-6.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Riot in Silence</h2>
-              </div>
+          <div class="card card--vue">
+            <h3>VUE</h3>
+            <div class="card-img-container">
+              <img src="/vue.png">
             </div>
           </div>
-          <div class="card">
-            <img
-              src="https://assets.codepen.io/16327/portrait-image-7.jpg"
-            >
-            <div class="card-content">
-              <p><span>Collection</span> <span>indie pop</span></p>
-              <div>
-                <span class="from">From</span>
-                <h2>Jet <br>Flame</h2>
-              </div>
+          <div class="card card--nuxt">
+            <h3>NUXT</h3>
+            <div class="card-img-container">
+              <img src="/nuxt.png">
+            </div>
+          </div>
+          <div class="card card--gsap">
+            <h3>GSAP</h3>
+            <div class="card-img-container card-img-container--cover">
+              <img src="/gsap.png">
             </div>
           </div>
         </div>
@@ -164,82 +143,130 @@ onUnmounted(() => ctx.revert())
 </template>
 
 <style>
-.tech-stack-section .cards-wrapper {
+.tech-stack-section {
+  background: linear-gradient(195deg, #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b);
+}
+.cards-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100vh;
   width: 100%;
 }
-.tech-stack-section .cards {
+
+.cards {
   display: flex;
   width: max-content;
   white-space: nowrap;
   gap: min(33vw, 69px);
   will-change: transform;
 }
-.tech-stack-section .card {
+
+.card {
   position: relative;
   width: min(69vw, 480px);
   aspect-ratio: 0.75;
   border-radius: 2vw;
-  overflow: hidden;
-  object-fit: cover;
   text-align: center;
   text-transform: uppercase;
-  border: 0.5vw solid currentColor;
+  border: 1vw solid currentcolor;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
-.tech-stack-section .card img {
+
+.card-img-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-img-container--cover {
   position: absolute;
-  top: 0;
-  left: 0;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+
+.card-img-container img {
+  width: 80%;
+}
+
+.card-img-container--cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
 }
 
-.tech-stack-section .card-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-.tech-stack-section .card-content p {
+.tech-stack-section p {
   display: flex;
   justify-content: space-between;
   padding: 0.5em 1em;
 }
+
 .tech-stack-section .from {
-  border: 0.2em solid currentColor;
+  border: 0.2em solid currentcolor;
   border-radius: 100%;
   padding: 0.28em 0.3em;
 }
-.tech-stack-section .card-content h2 {
-  font: 800 normal 4.5vw/0.8 'Inter', sans-serif;
+
+.card h3 {
+  font-family: 'Geist';
+  font-size:  var(--step-3);
+  line-height: 0.8;
   text-wrap: auto;
-  padding: 0.2em 0 0.12em;
+  margin: unset;
+  padding: 1em 0 0.12em;
+  position: relative;
+  z-index: 666;
 }
 
-.tech-stack-section .card:nth-child(1) {
-  color: #BCEFFF;
+.card--html {
+  color: white;
+  background-color: #f16524;
+  border-color: #e54c20;
 }
-.tech-stack-section .card:nth-child(2) {
-  color: #C9FE6E;
+
+.card--css {
+  color: white;
+  background-color: #1d73b7;
+  border-color: #33a9db;
 }
-.tech-stack-section .card:nth-child(3) {
-  color: #FAFF9E;
+
+.card--tailwind {
+  color: white;
+  background-color: #3fc3ca;
+  border-color: #3ebea6;
 }
-.tech-stack-section .card:nth-child(4) {
-  color: #FC4C3B;
+
+.card--js {
+  color: white;
+  background-color: #fbde35;
+  border-color: #eec726;
 }
-.tech-stack-section .card:nth-child(5) {
-  color: #F1F1F1;
+
+.card--ts {
+  color: white;
+  background-color: #3191cf;
+  border-color: #0c416d;
 }
-.tech-stack-section .card:nth-child(6) {
-  color: #8CEDFF;
+
+.card--vue {
+  color: white;
+  background-color: #53d799;
+  border-color: #39ae64;
 }
-.tech-stack-section .card:nth-child(7) {
-  color: #FAFF9E;
+
+.card--nuxt {
+  color: white;
+  background-color: #020420;
+  border-color: #00DC82;
+}
+
+.card--gsap {
+  color: white;
+  border-color: #7fbff2;
 }
 </style>
