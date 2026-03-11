@@ -36,7 +36,16 @@ onUnmounted(() => ctx.revert())
     <div ref="smooth-content">
       <HeroSection />
       <MotivationLetterSection />
-      <WebTechSection />
+      <TechStackSection />
+      <section class="spacer">
+        <hr>
+      </section>
     </div>
   </main>
 </template>
+
+<style>
+.spacer {
+  padding-bottom: 100vh;
+}
+</style>
