@@ -4,6 +4,7 @@
 
 :root {
   --color-primary: #fcf237;
+  overflow-x: hidden;
 }
 
 :root {
@@ -38,6 +39,7 @@ img {
 
 h1,
 h2 {
+  margin: unset;
   font-family: "Rubik Mono One", monospace;
   /* font-size: var(--step-5); */
   font-size: 4rem;
@@ -45,6 +47,14 @@ h2 {
   color: var(--color-primary);
   font-weight: 900;
   line-height: 0.8;
+}
+
+.h1--yellow {
+  color: var(--color-primary);
+}
+
+.h1--black {
+  color: black;
 }
 
 p {
@@ -71,8 +81,9 @@ p {
   min-block-size: 100svh;
   max-block-size: 100vh;
   padding: 1rem;
+
   & > * {
-   margin-block: 1rem;
+   margin-block-start: 1rem;
   }
   
   & > :first-child:not(h1) {

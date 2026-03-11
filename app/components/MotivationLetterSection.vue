@@ -18,8 +18,8 @@ const setupGsap = () => {
         stagger: 0.2,
         scrollTrigger: {
           trigger: hi.value,
-          start: 'top 50%',
-          end: 'bottom 80%',
+          start: 'top 70%',
+          end: 'bottom 70%',
           scrub: 1,
         },
       })
@@ -49,11 +49,3 @@ onUnmounted(() => ctx.revert())
     </div>
   </section>
 </template>
-
-<style>
-.introduction {
-  min-height: 100vh;
-  display: grid;
-  place-content: center;
-}
-</style>

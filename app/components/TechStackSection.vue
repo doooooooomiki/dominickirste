@@ -101,7 +101,7 @@ onUnmounted(() => ctx.revert())
             </div>
           </div>
           <div class="card card--tailwind">
-            <h3>TAIL<br>WIND</h3>
+            <h3>TAILWIND</h3>
             <div class="card-img-container">
               <img src="/tailwind.png">
             </div>
@@ -146,11 +146,13 @@ onUnmounted(() => ctx.revert())
 .tech-stack-section {
   background: linear-gradient(195deg, #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b);
 }
+
 .cards-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
+  /* height: 100vh; */
+  padding-block: 10rem;
   width: 100%;
 }
 
