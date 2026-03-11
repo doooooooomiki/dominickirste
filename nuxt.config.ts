@@ -28,6 +28,9 @@ export default defineNuxtConfig({
     },
   },
   fonts: {
-    families: [{ name: 'Geist', provider: 'google', weight: '900' }],
+    families: [
+      { name: 'Rubik Mono One', provider: 'google', weight: '900' },
+      { name: 'Geist', provider: 'google', weight: '400' },
+    ],
   },
 })

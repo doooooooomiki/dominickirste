@@ -29,6 +29,7 @@ img {
 }
 
 h1 {
+  font-family: "Rubik Mono One", monospace;
   /* font-size: var(--step-5); */
   font-size: 4rem;
   text-transform: uppercase;
