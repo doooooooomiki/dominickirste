@@ -9,7 +9,7 @@ let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!intro.value || !hi.value) return
-  const splitHi = SplitText.create(hi.value, { type: 'words', wordsClass: 'intro-word', smartWrap: true })
+  const splitHi = SplitText.create(hi.value, { type: 'words', wordsClass: 'intro-word' })
   ctx = gsap.context(() => {
     gsap.timeline()
       .from(splitHi.words, {
@@ -41,30 +41,41 @@ onUnmounted(() => ctx.revert())
   >
     <div
       data-speed="clamp(0.92)"
-      class="emoji emoji--happy-face"
+      class="emoji emoji--star-face"
     >
-      <img src="/emoji--happy-face.png">
+      <img src="/emoji--star-face.png">
     </div>
     <div
-      data-speed="clamp(0.91)"
+      data-speed="clamp(0.9)"
       class="emoji emoji--cool-face"
     >
       <img src="/emoji--cool-face.png">
     </div>
     <div
-      data-speed="clamp(0.9)"
+      data-speed="clamp(0.84)"
       class="emoji emoji--heart-face"
     >
       <img src="/emoji--heart-face.png">
     </div>
     <div
+      data-speed="clamp(0.8)"
+      class="emoji emoji--happy-face"
+    >
+      <img src="/emoji--happy-face.png">
+    </div>
+    <div
+      data-speed="clamp(0.78)"
+      class="emoji emoji--happy-star"
+    >
+      <img src="/emojii--happy-star.png">
+    </div>
+    <div
       ref="hi"
       class="layout-center"
     >
-      <p>
-        <strong>Hi.</strong>
-      </p>
-      <p>Mein Name ist Dominic und mein Zuhause ist das Frontend. Dort wo Design und Code sich die Hand geben.</p>
+      <p>Hi.</p>
+      <p>Mein Name ist Dominic und mein Zuhause ist das Frontend.</p>
+      <p>Dort wo Design und Code sich die Hand geben.</p>
     </div>
   </section>
 </template>
@@ -87,19 +98,29 @@ onUnmounted(() => ctx.revert())
   height: var(--step-5);
 }
 
-.emoji--happy-face {
-  right: 1%;
-  bottom: 24%;
+.emoji--star-face {
+  right: 2%;
+  bottom: 48%;
 }
 
 .emoji--cool-face {
   right: 4%;
-  bottom: 8%;
+  bottom: 32%;
 }
 
 .emoji--heart-face {
-  right: 2%;
-  bottom: -8%;
+  right: 4%;
+  bottom: 16%;
+}
+
+.emoji--happy-face {
+  right: 12%;
+  bottom: 24%;
+}
+
+.emoji--happy-star {
+  right: 16%;
+  bottom: 12%;
 }
 
 .emoji img {
