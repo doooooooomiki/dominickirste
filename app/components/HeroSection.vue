@@ -166,7 +166,6 @@ onUnmounted(() => ctx.revert())
   position: relative;
   width: 100%;
   min-block-size: 100vh;
-  min-block-size: 100svh;
   max-block-size: 100vh;
   background-color: var(--color-primary);
 }
