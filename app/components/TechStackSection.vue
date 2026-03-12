@@ -104,13 +104,13 @@ onUnmounted(() => ctx.revert())
             </div>
           </div>
           <div class="card card--js">
-            <h3>JAVA<br>SCRIPT</h3>
+            <h3>JAVA&shy;SCRIPT</h3>
             <div class="card-img-container">
               <img src="/javascript.png">
             </div>
           </div>
           <div class="card card--ts">
-            <h3>TYPE<br>SCRIPT</h3>
+            <h3>TYPE&shy;SCRIPT</h3>
             <div class="card-img-container">
               <img src="/typescript.png">
             </div>
