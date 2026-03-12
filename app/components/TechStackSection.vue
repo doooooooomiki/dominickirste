@@ -27,10 +27,10 @@ const setupGsap = () => {
     })
 
     const scrollTween = gsap.fromTo(gallery.value, {
-      x: () => techstack.value!.clientWidth + wrapper.value!.clientWidth,
+      x: () => techstack.value!.clientWidth + gallery.value!.firstElementChild!.clientWidth,
     },
     {
-      x: () => -(gallery.value!.scrollWidth + wrapper.value!.clientWidth),
+      x: () => -(gallery.value!.scrollWidth + gallery.value!.firstElementChild!.clientWidth),
       ease: 'none', // <-- IMPORTANT!
       scrollTrigger: {
         trigger: techstack.value,
