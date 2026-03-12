@@ -9,17 +9,19 @@ let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!section.value || !hi.value) return
-  const splitHi = SplitText.create(hi.value, { type: 'chars', smartWrap: true })
+  const splitHi = SplitText.create(hi.value, { type: 'words', smartWrap: true })
   ctx = gsap.context(() => {
     gsap.timeline()
-      .from(splitHi.chars, {
-        duration: 0.8,
-        autoAlpha: 0.44,
+      .from(splitHi.words, {
+        autoAlpha: 0,
         stagger: 0.2,
+        ease: 'back',
+        color: 'white',
+        rotation: 'random(-24, 24)',
         scrollTrigger: {
           trigger: hi.value,
-          start: 'top 70%',
-          end: 'bottom 70%',
+          start: 'top 80%',
+          end: 'bottom bottom',
           scrub: 1,
         },
       })
@@ -71,6 +73,7 @@ onUnmounted(() => ctx.revert())
 <style>
 .introduction {
   position: relative;
+  background-color: var(--color-primary);
 }
 
 .emoji {

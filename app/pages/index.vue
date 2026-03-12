@@ -43,15 +43,6 @@ onUnmounted(() => ctx.revert())
       <HeroSection />
       <MotivationLetterSection />
       <TechStackSection />
-      <section class="spacer">
-        <hr>
-      </section>
     </main>
   </div>
 </template>
-
-<style>
-.spacer {
-  padding-bottom: 100vh;
-}
-</style>
