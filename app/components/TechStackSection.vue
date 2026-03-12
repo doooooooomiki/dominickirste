@@ -29,12 +29,9 @@ const setupGsap = () => {
 
     gsap.utils.toArray<HTMLElement>(gallery.value.childNodes).forEach((card) => {
       const values = {
-      // get a value between 4 and 12 or -4 and -12
-        x: (Math.random() * 4 + 12) * (Math.random() < 0.5 ? 1 : -1),
-        // get a value between 8 and 12 or -4 and -12
-        y: (Math.random() * 4 + 12) * (Math.random() < 0.5 ? 1 : -1),
-        // get a value between 4 and 12 or -4 and -12
-        rotation: (Math.random() * 4 + 12) * (Math.random() < 0.5 ? 1 : -1),
+        x: gsap.utils.random(-12, 12),
+        y: gsap.utils.random(-12, 12),
+        rotation: gsap.utils.random(-12, 12),
       }
 
       gsap.fromTo(card, {
