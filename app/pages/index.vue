@@ -41,7 +41,7 @@ onUnmounted(() => ctx.revert())
       class="layout-stack"
     >
       <HeroSection />
-      <MotivationLetterSection />
+      <IntroductionSection />
       <TechStackSection />
     </main>
   </div>

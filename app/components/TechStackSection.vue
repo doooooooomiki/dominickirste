@@ -145,8 +145,7 @@ onUnmounted(() => ctx.revert())
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* height: 100vh; */
-  padding-block: 10rem;
+  padding-block: var(--space-l);
   width: 100%;
 }
 

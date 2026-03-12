@@ -3,20 +3,19 @@ import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { useResizeObserver } from '@vueuse/core'
 
-const section = useTemplateRef('section')
+const intro = useTemplateRef('intro')
 const hi = useTemplateRef('hi')
 let ctx: gsap.Context
 
 const setupGsap = () => {
-  if (!section.value || !hi.value) return
-  const splitHi = SplitText.create(hi.value, { type: 'words', smartWrap: true })
+  if (!intro.value || !hi.value) return
+  const splitHi = SplitText.create(hi.value, { type: 'words', wordsClass: 'intro-word', smartWrap: true })
   ctx = gsap.context(() => {
     gsap.timeline()
       .from(splitHi.words, {
         autoAlpha: 0,
         stagger: 0.2,
         ease: 'back',
-        color: 'white',
         rotation: 'random(-24, 24)',
         scrollTrigger: {
           trigger: hi.value,
@@ -25,10 +24,10 @@ const setupGsap = () => {
           scrub: 1,
         },
       })
-  }, section.value)
+  }, intro.value)
 }
 
-useResizeObserver(section, () => setupGsap())
+useResizeObserver(intro, () => setupGsap())
 
 onMounted(() => setupGsap())
 
@@ -37,8 +36,8 @@ onUnmounted(() => ctx.revert())
 
 <template>
   <section
-    ref="section"
-    class="introduction"
+    ref="intro"
+    class="intro"
   >
     <div
       data-speed="clamp(0.92)"
@@ -71,8 +70,14 @@ onUnmounted(() => ctx.revert())
 </template>
 
 <style>
-.introduction {
+.intro {
   position: relative;
+  background-color: var(--color-primary);
+}
+
+.intro-word {
+  border: 1vw solid black;
+  border-radius: 16px;
   background-color: var(--color-primary);
 }
 
