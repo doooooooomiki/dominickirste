@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
-import { useResizeObserver } from '@vueuse/core'
 import fitty from 'fitty'
 
 const hero = useTemplateRef('hero')
@@ -14,8 +13,6 @@ let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!hero.value || !pinner.value || !surname.value || !familyname.value) return
-
-  fitty('.fit')
 
   ctx = gsap.context(() => {
     const splitSurname = SplitText.create(surname.value, { type: 'chars' })
@@ -68,12 +65,10 @@ const setupGsap = () => {
       },
     })
       .to(reveal.value, {
-        clipPath: 'circle(71% at 50% 50%)',
+        clipPath: 'circle(70.7014% at 50% 50%)',
       })
   }, hero.value)
 }
-
-useResizeObserver(hero, () => fitty.fitAll())
 
 onMounted(() => setupGsap())
 

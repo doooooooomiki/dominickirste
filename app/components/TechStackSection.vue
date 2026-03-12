@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
-import fitty from 'fitty'
 
 const wrapper = useTemplateRef('tech-stack-wrapper')
 const gallery = useTemplateRef('tech-stack-gallery')
@@ -9,8 +8,6 @@ let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!wrapper.value) return
-
-  fitty('.fit')
 
   ctx = gsap.context(() => {
     if (!wrapper.value || !gallery.value) return
