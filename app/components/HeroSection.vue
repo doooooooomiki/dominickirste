@@ -4,6 +4,7 @@ import { SplitText } from 'gsap/SplitText'
 import fitty from 'fitty'
 
 const hero = useTemplateRef('hero')
+const heroimg = useTemplateRef('hero-img')
 const pinner = useTemplateRef('hero-pinner')
 const surname = useTemplateRef('surname')
 const familyname = useTemplateRef('familyname')
@@ -67,6 +68,9 @@ const setupGsap = () => {
       .to(reveal.value, {
         clipPath: 'circle(70.7014% at 50% 50%)',
       })
+      .from(heroimg.value, {
+        scale: 1.2,
+      }, '<')
   }, hero.value)
 }
 
@@ -117,12 +121,16 @@ onUnmounted(() => ctx.revert())
         ref="hero-reveal"
         class="hero-content hero-content--reveal"
       >
-        <NuxtImg
-          class="hero-image"
-          src="/dominickirste.jpg"
-          sizes="sm:800px md:1600px lg:3200px"
-          quality="100"
-        />
+        <div
+          ref="hero-img"
+          class="hero-img"
+        >
+          <NuxtImg
+            src="/dominickirste.jpg"
+            sizes="sm:800px md:1600px lg:3200px"
+            quality="100"
+          />
+        </div>
         <div class="layout-center layout-cover hero-cover">
           <h1 class="h1--yellow">
             <div class="surname fit">
@@ -150,7 +158,7 @@ onUnmounted(() => ctx.revert())
 
 <style>
 .hero {
-  block-size: 400vh;
+  block-size: 300vh;
   width: 100%;
 }
 
@@ -182,9 +190,14 @@ onUnmounted(() => ctx.revert())
   z-index: 666;
 }
 
-.hero-image {
+.hero-img {
   position: absolute;
+  width: 100%;
+  height: 100%;
   inset: 0;
+}
+
+.hero-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
