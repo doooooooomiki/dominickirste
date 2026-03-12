@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 
+const techstack = useTemplateRef('tech-stack')
+const techstackinner = useTemplateRef('tech-stack-inner')
 const wrapper = useTemplateRef('tech-stack-wrapper')
 const gallery = useTemplateRef('tech-stack-gallery')
+const heading = useTemplateRef('tech-stack-heading-wrapper')
 
 let ctx: gsap.Context
 
@@ -10,19 +13,31 @@ const setupGsap = () => {
   if (!wrapper.value) return
 
   ctx = gsap.context(() => {
-    if (!wrapper.value || !gallery.value) return
+    if (!techstack.value || !techstackinner.value || !wrapper.value || !gallery.value || !heading.value) return
 
-    const getDistance = () => gallery.value!.scrollWidth - wrapper.value!.clientWidth
-
-    const scrollTween = gsap.to(gallery.value, {
-      x: () => -(getDistance()),
-      ease: 'none', // <-- IMPORTANT!
+    gsap.to(heading.value, {
       scrollTrigger: {
-        trigger: wrapper.value,
-        pin: true,
+        trigger: techstack.value,
+        pin: heading.value,
         scrub: true,
         start: 'top top',
-        end: () => `+=${getDistance()}`,
+        end: 'bottom bottom',
+        pinSpacing: false,
+      },
+    })
+
+    const scrollTween = gsap.fromTo(gallery.value, {
+      x: () => techstack.value!.clientWidth + wrapper.value!.clientWidth,
+    },
+    {
+      x: () => -(gallery.value!.scrollWidth + wrapper.value!.clientWidth),
+      ease: 'none', // <-- IMPORTANT!
+      scrollTrigger: {
+        trigger: techstack.value,
+        pin: wrapper.value,
+        scrub: true,
+        start: 'top top',
+        end: 'bottom bottom',
         invalidateOnRefresh: true,
       },
     })
@@ -61,73 +76,86 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <section class="tech-stack-section">
+  <section
+    ref="tech-stack"
+    class="tech-stack"
+  >
     <div class="layout-center">
-      <h2>
-        <div class="fit">
-          Wellen
-        </div>
-        <div class="fit">
-          die ich
-        </div>
-        <div class="fit">
-          surfe
-        </div>
-      </h2>
       <div
-        ref="tech-stack-wrapper"
-        class="cards-wrapper"
+        ref="tech-stack-inner"
+        class="tech-stack-inner"
       >
         <div
-          ref="tech-stack-gallery"
-          class="cards"
+          ref="tech-stack-heading-wrapper"
+          class="tech-stack-heading-wrapper layout-stack-block"
         >
-          <div class="card card--html">
-            <h3>HTML</h3>
-            <div class="card-img-container">
-              <img src="/html.png">
+          <h2>
+            <div class="fit">
+              Wellen
             </div>
-          </div>
-          <div class="card card--css">
-            <h3>CSS</h3>
-            <div class="card-img-container">
-              <img src="/css3.png">
+            <div class="fit">
+              die ich
             </div>
-          </div>
-          <div class="card card--tailwind">
-            <h3>TAILWIND</h3>
-            <div class="card-img-container">
-              <img src="/tailwind.png">
+            <div class="fit">
+              surfe
             </div>
-          </div>
-          <div class="card card--js">
-            <h3>JAVA&shy;SCRIPT</h3>
-            <div class="card-img-container">
-              <img src="/javascript.png">
+          </h2>
+        </div>
+        <div
+          ref="tech-stack-wrapper"
+          class="cards-wrapper layout-stack-block"
+        >
+          <div
+            ref="tech-stack-gallery"
+            class="cards"
+          >
+            <div class="card card--html">
+              <h3>HTML</h3>
+              <div class="card-img-container">
+                <img src="/html.png">
+              </div>
             </div>
-          </div>
-          <div class="card card--ts">
-            <h3>TYPE&shy;SCRIPT</h3>
-            <div class="card-img-container">
-              <img src="/typescript.png">
+            <div class="card card--css">
+              <h3>CSS</h3>
+              <div class="card-img-container">
+                <img src="/css3.png">
+              </div>
             </div>
-          </div>
-          <div class="card card--vue">
-            <h3>VUE</h3>
-            <div class="card-img-container">
-              <img src="/vue.png">
+            <div class="card card--tailwind">
+              <h3>TAILWIND</h3>
+              <div class="card-img-container">
+                <img src="/tailwind.png">
+              </div>
             </div>
-          </div>
-          <div class="card card--nuxt">
-            <h3>NUXT</h3>
-            <div class="card-img-container">
-              <img src="/nuxt.png">
+            <div class="card card--js">
+              <h3>JAVA&shy;SCRIPT</h3>
+              <div class="card-img-container">
+                <img src="/javascript.png">
+              </div>
             </div>
-          </div>
-          <div class="card card--gsap">
-            <h3>GSAP</h3>
-            <div class="card-img-container card-img-container--cover">
-              <img src="/gsap.png">
+            <div class="card card--ts">
+              <h3>TYPE&shy;SCRIPT</h3>
+              <div class="card-img-container">
+                <img src="/typescript.png">
+              </div>
+            </div>
+            <div class="card card--vue">
+              <h3>VUE</h3>
+              <div class="card-img-container">
+                <img src="/vue.png">
+              </div>
+            </div>
+            <div class="card card--nuxt">
+              <h3>NUXT</h3>
+              <div class="card-img-container">
+                <img src="/nuxt.png">
+              </div>
+            </div>
+            <div class="card card--gsap">
+              <h3>GSAP</h3>
+              <div class="card-img-container card-img-container--cover">
+                <img src="/gsap.png">
+              </div>
             </div>
           </div>
         </div>
@@ -137,23 +165,44 @@ onUnmounted(() => ctx.revert())
 </template>
 
 <style>
-.tech-stack-section {
+.tech-stack {
   background: linear-gradient(195deg, #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b);
+  block-size: 600vh;
+}
+
+.tech-stack-inner {
+  position: relative;
+  block-size: 100vh;
+}
+
+.tech-stack-heading-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tech-stack-heading-wrapper h2 {
+  width: 100%;
 }
 
 .cards-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-block: var(--space-l);
   width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
 }
 
 .cards {
   display: flex;
   width: max-content;
   white-space: nowrap;
-  gap: min(33vw, 69px);
+  gap: min(12vw, 32px);
   will-change: transform;
 }
 
@@ -193,18 +242,6 @@ onUnmounted(() => ctx.revert())
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.tech-stack-section p {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5em 1em;
-}
-
-.tech-stack-section .from {
-  border: 0.2em solid currentcolor;
-  border-radius: 100%;
-  padding: 0.28em 0.3em;
 }
 
 .card h3 {
