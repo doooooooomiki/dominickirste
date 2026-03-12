@@ -57,6 +57,10 @@ h2 {
   color: black;
 }
 
+section {
+  position: relative;
+}
+
 p {
   margin: unset;
   font-size: var(--step-5);
@@ -67,10 +71,10 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  & > *:not(.hero) {
-    padding-block: var(--space-xl);
-  }
 
+  & .layout-stack-block {
+    padding-block: var(--space-m);
+  }
 }
 
   /* @link https://every-layout.dev/layouts/cover/ */ 

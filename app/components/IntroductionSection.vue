@@ -37,7 +37,7 @@ onUnmounted(() => ctx.revert())
 <template>
   <section
     ref="intro"
-    class="intro"
+    class="intro layout-stack-block"
   >
     <div
       data-speed="clamp(0.92)"

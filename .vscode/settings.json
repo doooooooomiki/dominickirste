@@ -4,9 +4,6 @@
     "source.fixAll": "never",
     "source.fixAll.eslint": "explicit"
   },
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
   "editor.quickSuggestions": {
     "strings": "on"
   },
