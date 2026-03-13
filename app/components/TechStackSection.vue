@@ -48,13 +48,13 @@ const setupGsap = () => {
       .to(line1.value, {
         scrambleText: {
           text: `Let's ride`,
-          chars: `Let'sride`,
+          chars: `Let's ride`,
         },
       }, '0.3')
       .to(line2.value, {
         scrambleText: {
-          text: 'these waves',
-          chars: 'thesewaves',
+          text: 'them',
+          chars: 'them',
         },
       })
       .to(line3.value, {
@@ -130,7 +130,7 @@ onUnmounted(() => ctx.revert())
           <h2 ref="tech-stack-heading">
             <div>
               <div ref="tech-stack-heading--line-1">
-                Die Wellen
+                Wellen
               </div>
               <div ref="tech-stack-heading--line-2">
                 sind zum
