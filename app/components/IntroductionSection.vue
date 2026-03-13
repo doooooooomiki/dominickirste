@@ -9,7 +9,11 @@ let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!intro.value || !hi.value) return
-  const splitHi = SplitText.create(hi.value, { type: 'words', wordsClass: 'intro-word' })
+  const splitHi = SplitText.create(hi.value, {
+    type: 'words, lines',
+    wordsClass: 'intro-word',
+    linesClass: 'intro-line',
+  })
   ctx = gsap.context(() => {
     gsap.timeline()
       .from(splitHi.words, {
@@ -90,6 +94,10 @@ onUnmounted(() => ctx.revert())
   border: 1vw solid black;
   border-radius: 16px;
   background-color: var(--color-primary);
+}
+
+.intro-line + .intro-line {
+  margin-block-start: 1vw;
 }
 
 .emoji {
