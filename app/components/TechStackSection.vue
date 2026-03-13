@@ -34,7 +34,7 @@ const setupGsap = () => {
 
   const throttledFitLines = useThrottleFn(() => {
     fitLines()
-  }, 24)
+  }, 120)
 
   ctx = gsap.context(() => {
     if (!techstack.value || !techstackinner.value || !wrapper.value || !gallery.value || !heading.value) return
@@ -54,7 +54,7 @@ const setupGsap = () => {
         scrambleText: {
           text: `Let's ride`,
           chars: `Let's ride`,
-          speed: 0.1,
+          speed: 0.01,
           delimiter: ' ',
         },
       }, '0.3')
@@ -62,7 +62,7 @@ const setupGsap = () => {
         scrambleText: {
           text: 'them',
           chars: 'them',
-          speed: 0.1,
+          speed: 0.01,
           delimiter: ' ',
         },
       })
@@ -70,7 +70,7 @@ const setupGsap = () => {
         scrambleText: {
           text: 'together',
           chars: 'together',
-          speed: 0.1,
+          speed: 0.01,
           delimiter: ' ',
         },
       })
