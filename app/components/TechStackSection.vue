@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import fitty from 'fitty'
+import { useThrottleFn } from '@vueuse/core'
 
 const techstack = useTemplateRef('tech-stack')
 const techstackinner = useTemplateRef('tech-stack-inner')
@@ -31,12 +32,16 @@ const setupGsap = () => {
     fitLine3.fit({ sync: true })
   }
 
+  const throttledFitLines = useThrottleFn(() => {
+    fitLines()
+  }, 24)
+
   ctx = gsap.context(() => {
     if (!techstack.value || !techstackinner.value || !wrapper.value || !gallery.value || !heading.value) return
 
     gsap.timeline({
       scrollTrigger: {
-        onUpdate: () => fitLines(),
+        onUpdate: () => throttledFitLines(),
         trigger: techstack.value,
         pin: heading.value,
         scrub: true,
@@ -49,18 +54,24 @@ const setupGsap = () => {
         scrambleText: {
           text: `Let's ride`,
           chars: `Let's ride`,
+          speed: 0.1,
+          delimiter: ' ',
         },
       }, '0.3')
       .to(line2.value, {
         scrambleText: {
           text: 'them',
           chars: 'them',
+          speed: 0.1,
+          delimiter: ' ',
         },
       })
       .to(line3.value, {
         scrambleText: {
           text: 'together',
           chars: 'together',
+          speed: 0.1,
+          delimiter: ' ',
         },
       })
 
