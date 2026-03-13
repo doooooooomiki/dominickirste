@@ -159,6 +159,7 @@ onUnmounted(() => ctx.revert())
 <style>
 .hero {
   block-size: 300vh;
+  background-color: var(--color-primary);
   width: 100%;
 }
 
@@ -166,7 +167,7 @@ onUnmounted(() => ctx.revert())
   position: relative;
   width: 100%;
   block-size: 100svh;
-  background-color: var(--color-primary);
+  background-color: inherit;
 }
 
 .hero-content {
