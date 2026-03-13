@@ -165,13 +165,13 @@ onUnmounted(() => ctx.revert())
 .hero-pinner {
   position: relative;
   width: 100%;
-  min-block-size: 100vh;
-  max-block-size: 100vh;
+  block-size: 100svh;
   background-color: var(--color-primary);
 }
 
 .hero-content {
   position: relative;
+  height: 100%;
 }
 
 .hero-content--reveal {

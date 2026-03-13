@@ -77,7 +77,7 @@ p {
 .layout-cover {
   display: flex;
   flex-direction: column;
-  block-size: 100vh;
+  block-size: 100svh;
   padding-block: var(--space-s);
 
   & > * {

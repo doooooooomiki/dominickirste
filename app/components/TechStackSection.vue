@@ -172,7 +172,7 @@ onUnmounted(() => ctx.revert())
 
 .tech-stack-inner {
   position: relative;
-  block-size: 100vh;
+  block-size: 100svh;
 }
 
 .tech-stack-heading-wrapper {
