@@ -37,15 +37,14 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <main
-    ref="smooth-wrapper"
-    class="layout-stack"
-  >
+  <div ref="smooth-wrapper">
     <div ref="smooth-content">
-      <HeroSection />
-      <IntroductionSection />
-      <TechStackSection />
+      <main class="layout-stack">
+        <HeroSection />
+        <IntroductionSection />
+        <TechStackSection />
+      </main>
       <OutroSection />
     </div>
-  </main>
+  </div>
 </template>
