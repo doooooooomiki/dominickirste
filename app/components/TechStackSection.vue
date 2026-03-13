@@ -1,22 +1,42 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
+import fitty from 'fitty'
 
 const techstack = useTemplateRef('tech-stack')
 const techstackinner = useTemplateRef('tech-stack-inner')
 const wrapper = useTemplateRef('tech-stack-wrapper')
 const gallery = useTemplateRef('tech-stack-gallery')
 const heading = useTemplateRef('tech-stack-heading-wrapper')
+const line1 = useTemplateRef('tech-stack-heading--line-1')
+const line2 = useTemplateRef('tech-stack-heading--line-2')
+const line3 = useTemplateRef('tech-stack-heading--line-3')
 
 let ctx: gsap.Context
 
 const setupGsap = () => {
-  if (!wrapper.value) return
+  if (!wrapper.value || !line1.value || !line2.value || !line3.value) return
+
+  const fitLine1 = fitty(line1.value, { minSize: 1 })
+  fitLine1.fit({ sync: true })
+
+  const fitLine2 = fitty(line2.value, { minSize: 1 })
+  fitLine2.fit({ sync: true })
+
+  const fitLine3 = fitty(line3.value, { minSize: 1 })
+  fitLine3.fit({ sync: true })
+
+  const fitLines = () => {
+    fitLine1.fit({ sync: true })
+    fitLine2.fit({ sync: true })
+    fitLine3.fit({ sync: true })
+  }
 
   ctx = gsap.context(() => {
     if (!techstack.value || !techstackinner.value || !wrapper.value || !gallery.value || !heading.value) return
 
-    gsap.to(heading.value, {
+    gsap.timeline({
       scrollTrigger: {
+        onUpdate: () => fitLines(),
         trigger: techstack.value,
         pin: heading.value,
         scrub: true,
@@ -25,6 +45,24 @@ const setupGsap = () => {
         pinSpacing: false,
       },
     })
+      .to(line1.value, {
+        scrambleText: {
+          text: `Let's ride`,
+          chars: `Let'sride`,
+        },
+      }, '0.3')
+      .to(line2.value, {
+        scrambleText: {
+          text: 'these waves',
+          chars: 'thesewaves',
+        },
+      })
+      .to(line3.value, {
+        scrambleText: {
+          text: 'together',
+          chars: 'together',
+        },
+      })
 
     const scrollTween = gsap.fromTo(gallery.value, {
       x: () => techstack.value!.clientWidth + gallery.value!.firstElementChild!.clientWidth,
@@ -89,15 +127,17 @@ onUnmounted(() => ctx.revert())
           ref="tech-stack-heading-wrapper"
           class="tech-stack-heading-wrapper layout-stack-block"
         >
-          <h2>
-            <div class="fit">
-              Wellen
-            </div>
-            <div class="fit">
-              die ich
-            </div>
-            <div class="fit">
-              surfe
+          <h2 ref="tech-stack-heading">
+            <div>
+              <div ref="tech-stack-heading--line-1">
+                Die Wellen
+              </div>
+              <div ref="tech-stack-heading--line-2">
+                sind zum
+              </div>
+              <div ref="tech-stack-heading--line-3">
+                Surfen da
+              </div>
             </div>
           </h2>
         </div>

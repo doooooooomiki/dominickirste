@@ -3,13 +3,15 @@ import { gsap } from 'gsap'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { useResizeObserver } from '@vueuse/core'
 import fitty from 'fitty'
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger, SplitText)
+gsap.registerPlugin(ScrollSmoother, ScrollTrigger, SplitText, ScrambleTextPlugin)
 
 const wrapper = useTemplateRef('smooth-wrapper')
 const content = useTemplateRef('smooth-content')
+
 let ctx: gsap.Context
 
 const setupGsap = () => {
@@ -35,14 +37,14 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <div ref="smooth-wrapper">
-    <main
-      ref="smooth-content"
-      class="layout-stack"
-    >
+  <main
+    ref="smooth-wrapper"
+    class="layout-stack"
+  >
+    <div ref="smooth-content">
       <HeroSection />
       <IntroductionSection />
       <TechStackSection />
-    </main>
-  </div>
+    </div>
+  </main>
 </template>

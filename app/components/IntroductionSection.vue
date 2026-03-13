@@ -9,11 +9,13 @@ let ctx: gsap.Context
 
 const setupGsap = () => {
   if (!intro.value || !hi.value) return
+
   const splitHi = SplitText.create(hi.value, {
     type: 'words, lines',
     wordsClass: 'intro-word',
     linesClass: 'intro-line',
   })
+
   ctx = gsap.context(() => {
     gsap.timeline()
       .from(splitHi.words, {
