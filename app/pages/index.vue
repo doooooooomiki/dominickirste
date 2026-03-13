@@ -45,6 +45,7 @@ onUnmounted(() => ctx.revert())
       <HeroSection />
       <IntroductionSection />
       <TechStackSection />
+      <OutroSection />
     </div>
   </main>
 </template>
