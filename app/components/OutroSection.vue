@@ -1,32 +1,33 @@
 <script setup lang="ts">
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+// import { gsap } from 'gsap'
+// import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const outro = useTemplateRef('outro')
+// const outro = useTemplateRef('outro')
 
-let ctx: gsap.Context
+// let ctx: gsap.Context
 
-const setupGsap = () => {
-  if (!outro.value) return
+// const setupGsap = () => {
+//   if (!outro.value) return
 
-  ctx = gsap.context(() => {
-    ScrollTrigger.create({
-      trigger: outro.value,
-      pin: true,
-      start: 'bottom bottom',
-      end: '+=100%',
-    })
-  }, outro.value)
-}
+//   ctx = gsap.context(() => {
+//     ScrollTrigger.create({
+//       trigger: outro.value,
+//       pin: true,
+//       start: 'bottom bottom',
+//       end: '+=100%',
+//       pinSpacing: false,
+//     })
+//   }, outro.value)
+// }
 
-onMounted(() => setupGsap())
+// onMounted(() => setupGsap())
 
-onUnmounted(() => ctx.revert())
+// onUnmounted(() => ctx.revert())
 </script>
 
 <template>
   <section ref="outro" class="outro">
-    <div class="layout-center layout-cover">
+    <div class="layout-center layout-cover outro-cover">
       <h1 class="h1--black">
         <div class="fit surname">
           Dominic
@@ -66,13 +67,20 @@ onUnmounted(() => ctx.revert())
 </template>
 
 <style>
-.outro {
+/* .outro {
   position: relative;
   width: 100%;
   block-size: 100svh;
-  margin-top: -100svh;
   background-color: var(--color-primary);
   z-index: -1;
+} */
+
+.outro {
+  background-color: var(--color-primary);
+
+}
+.outro-cover {
+  block-size: auto;
 }
 
 .links {
