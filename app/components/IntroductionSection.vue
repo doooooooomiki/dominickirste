@@ -100,17 +100,17 @@ onUnmounted(() => ctx.revert())
 
 .emoji--star-face {
   right: 2%;
-  bottom: 48%;
+  bottom: 64%;
 }
 
 .emoji--cool-face {
   right: 4%;
-  bottom: 32%;
+  bottom: 48%;
 }
 
 .emoji--heart-face {
   right: 4%;
-  bottom: 16%;
+  bottom: 34%;
 }
 
 .emoji--happy-face {
@@ -119,7 +119,7 @@ onUnmounted(() => ctx.revert())
 }
 
 .emoji--happy-star {
-  right: 16%;
+  right: 8%;
   bottom: 12%;
 }
 
