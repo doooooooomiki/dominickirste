@@ -15,12 +15,18 @@ let ctx: gsap.Context
 const setupGsap = () => {
   if (!hero.value || !pinner.value || !surname.value || !familyname.value) return
 
+  const fitSurname = fitty(surname.value, { minSize: 1 })
+  fitSurname.fit({ sync: true })
+
+  const fitFamilyname = fitty(familyname.value, { minSize: 1 })
+  fitFamilyname.fit({ sync: true })
+
   ctx = gsap.context(() => {
     const splitSurname = SplitText.create(surname.value, { type: 'chars' })
     gsap.set(splitSurname.chars, {
       y: 20,
       autoAlpha: 0,
-      onComplete: () => { if (surname.value) fitty(surname.value, { minSize: 1 }) },
+      onComplete: () => fitSurname.fit({ sync: true }),
     })
     gsap.set(surname.value, {
       autoAlpha: 1,
@@ -30,7 +36,7 @@ const setupGsap = () => {
     gsap.set(splitFamilyname.chars, {
       y: 20,
       autoAlpha: 0,
-      onComplete: () => { if (familyname.value) fitty(familyname.value, { minSize: 1 }) },
+      onComplete: () => fitFamilyname.fit({ sync: true }),
     })
     gsap.set(familyname.value, {
       autoAlpha: 1,
