@@ -40,20 +40,28 @@ img {
 h1,
 h2 {
   margin: unset;
-  font-family: "Rubik Mono One", monospace;
-  /* font-size: var(--step-5); */
-  font-size: 4rem;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  font-weight: 900;
-  line-height: 0.8;
+  line-height: 1.4;
 }
 
-.h1--yellow {
+.on--mobile {
+  display: block;
+  @media (width >= 96ch) {
+    display: none;
+  }
+}
+
+.on--desktop {
+  display: none;
+  @media (width >= 96ch) {
+    display: block;
+  }
+}
+
+.color--tamago {
   color: var(--color-primary);
 }
 
-.h1--black {
+.color--soy-sauce {
   color: black;
 }
 
@@ -84,20 +92,9 @@ a:not([class]) {
   flex-direction: column;
   block-size: 100svh;
   padding-block: var(--space-s);
+  gap: 1ch;
 
-  & > * {
-   margin-block-start: 1rem;
-  }
-  
-  & > :first-child:not(h1) {
-   margin-block-start: 0;
-  }
-  
-  & > :last-child:not(h1) {
-   margin-block-end: 0;
-  }
-  
-  & > h1 {
+  & > :first-child {
    margin-block-start: auto;
   }
 }
@@ -110,4 +107,28 @@ a:not([class]) {
   inline-size: 100%;
   max-inline-size: var(--measure);
   padding-inline: var(--gutter-wrapper-inline, var(--gutter));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.clip--hidden {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+.svg-text {
+  overflow: hidden;
+}
+
+.svg-text-to-be-revealed > div{
+  transform: translateY(100%);
 }
