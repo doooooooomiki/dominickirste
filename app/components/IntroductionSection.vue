@@ -1,39 +1,77 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
-import { useResizeObserver } from '@vueuse/core'
 
 const intro = useTemplateRef('intro')
+const inner = useTemplateRef('intro-inner')
+const content = useTemplateRef('intro-content')
 const hi = useTemplateRef('hi')
+const home = useTemplateRef('home')
+const handshake = useTemplateRef('handshake')
 let ctx: gsap.Context
 
 const setupGsap = () => {
-  if (!intro.value || !hi.value) return
+  if (!intro.value || !content.value || !hi.value) return
 
   const splitHi = SplitText.create(hi.value, {
     type: 'words, lines',
     wordsClass: 'intro-word',
-    linesClass: 'intro-line',
+    linesClass: 'intro-line intro-line--hi',
+  })
+
+  const splitHome = SplitText.create(home.value, {
+    type: 'words, lines',
+    wordsClass: 'intro-word',
+    linesClass: 'intro-line intro-line--home',
+  })
+
+  const splitShakehands = SplitText.create(handshake.value, {
+    type: 'words, lines',
+    wordsClass: 'intro-word',
+    linesClass: 'intro-line intro-line--handshake',
   })
 
   ctx = gsap.context(() => {
-    gsap.timeline()
-      .from(splitHi.words, {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: inner.value,
+        pin: content.value,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    })
+      .to(splitHi.words, {
         autoAlpha: 0,
         stagger: 0.2,
         ease: 'back',
         rotation: 'random(-24, 24)',
-        scrollTrigger: {
-          trigger: hi.value,
-          start: 'top 80%',
-          end: 'bottom bottom',
-          scrub: 1,
-        },
+        duration: 1,
+      }, '>1')
+      .from(splitHome.words, {
+        autoAlpha: 0,
+        stagger: 0.2,
+        ease: 'back',
+        rotation: 'random(-24, 24)',
+        duration: 1,
+      })
+      .to(splitHome.words, {
+        autoAlpha: 0,
+        stagger: 0.2,
+        ease: 'back',
+        rotation: 'random(-24, 24)',
+        duration: 1,
+      }, '>1')
+      .from(splitShakehands.words, {
+        autoAlpha: 0,
+        stagger: 0.2,
+        ease: 'back',
+        rotation: 'random(-24, 24)',
+        duration: 1,
       })
   }, intro.value)
 }
-
-useResizeObserver(intro, () => setupGsap())
 
 onMounted(() => setupGsap())
 
@@ -41,47 +79,44 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <section
-    ref="intro"
-    class="intro layout-stack-block"
-  >
-    <div
-      data-speed="clamp(0.92)"
-      class="emoji emoji--star-face"
-    >
-      <img src="/emoji--star-face.png">
-    </div>
-    <div
-      data-speed="clamp(0.9)"
-      class="emoji emoji--cool-face"
-    >
-      <img src="/emoji--cool-face.png">
-    </div>
-    <div
-      data-speed="clamp(0.84)"
-      class="emoji emoji--heart-face"
-    >
-      <img src="/emoji--heart-face.png">
-    </div>
-    <div
-      data-speed="clamp(0.8)"
-      class="emoji emoji--happy-face"
-    >
-      <img src="/emoji--happy-face.png">
-    </div>
-    <div
-      data-speed="clamp(0.78)"
-      class="emoji emoji--happy-star"
-    >
-      <img src="/emojii--happy-star.png">
-    </div>
-    <div
-      ref="hi"
-      class="layout-center"
-    >
-      <p>Hi.</p>
-      <p>Mein Name ist Dominic und mein Zuhause ist das Frontend.</p>
-      <p>Dort wo Design und Code sich die Hand geben.</p>
+  <section ref="intro" class="intro layout-stack-block">
+    <div ref="intro-inner" class="intro-inner layout-center">
+      <div ref="intro-content" class="intro-content">
+        <div
+          class="emoji emoji--star-face"
+        >
+          <img src="/emoji--star-face.png">
+        </div>
+        <div
+          class="emoji emoji--cool-face"
+        >
+          <img src="/emoji--cool-face.png">
+        </div>
+        <div
+          class="emoji emoji--heart-face"
+        >
+          <img src="/emoji--heart-face.png">
+        </div>
+        <div
+          class="emoji emoji--happy-face"
+        >
+          <img src="/emoji--happy-face.png">
+        </div>
+        <div
+          class="emoji emoji--happy-star"
+        >
+          <img src="/emojii--happy-star.png">
+        </div>
+        <div ref="hi" class="line-container line-container--hi">
+          <p>Hi. Mein Name ist Dominic</p>
+        </div>
+        <div ref="home" class="line-container line-container--home">
+          <p>und mein Zuhause ist das Frontend.</p>
+        </div>
+        <div ref="handshake" class="line-container line-container--handshake">
+          <p>Dort wo Design und Code sich die Hand geben.</p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -90,6 +125,26 @@ onUnmounted(() => ctx.revert())
 .intro {
   position: relative;
   background-color: var(--color-primary);
+}
+
+.intro-inner {
+  position: inherit;
+  block-size: 800svh;
+}
+
+.intro-content {
+  position: inherit;
+  block-size: 100svh;
+}
+
+.line-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .intro-word {
@@ -110,27 +165,27 @@ onUnmounted(() => ctx.revert())
 
 .emoji--star-face {
   right: 2%;
-  bottom: 64%;
+  top: 8%;
 }
 
 .emoji--cool-face {
   right: 4%;
-  bottom: 48%;
+  top: 80%;
 }
 
 .emoji--heart-face {
-  right: 4%;
-  bottom: 34%;
+  right: 2%;
+  top: 64%;
 }
 
 .emoji--happy-face {
-  right: 12%;
-  bottom: 24%;
+  right: 4%;
+  top: 44%;
 }
 
 .emoji--happy-star {
   right: 8%;
-  bottom: 12%;
+  top: 28%;
 }
 
 .emoji img {
