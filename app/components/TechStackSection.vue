@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const techstack = useTemplateRef('tech-stack')
 const techstackinner = useTemplateRef('tech-stack-inner')
@@ -17,24 +18,31 @@ const setupGsap = () => {
   ctx = gsap.context(() => {
     if (!techstack.value || !techstackinner.value || !wrapper.value || !gallery.value || !text.value) return
 
+    ScrollTrigger.create({
+      trigger: techstack.value,
+      pin: text.value,
+      scrub: true,
+      start: 'top top',
+      end: 'bottom bottom',
+      pinSpacing: false,
+      invalidateOnRefresh: true,
+    })
+
     gsap.timeline({
       scrollTrigger: {
         trigger: techstack.value,
-        pin: text.value,
-        scrub: true,
-        start: 'top top',
-        end: 'bottom bottom',
-        pinSpacing: false,
-        invalidateOnRefresh: true,
+        start: 'center center',
+        end: 'center center',
+        scrub: 1,
       },
     })
       .to(heading.value, {
         autoAlpha: 0,
-        duration: 1,
+        duration: 0.8,
       })
       .to(paragraph.value, {
         autoAlpha: 1,
-        duration: 1,
+        duration: 0.8,
       })
 
     const scrollTween = gsap.fromTo(gallery.value, {
