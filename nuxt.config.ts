@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/fonts', '@vueuse/nuxt'],
+  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/fonts', '@vueuse/nuxt', 'nuxt-og-image'],
   devtools: { enabled: true },
   app: {
     head: {
@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  site: {
+    url: 'https://dominickirste.dev/',
+    name: 'Dominic Kirste',
+  },
   features: {
     inlineStyles: false,
   },
@@ -29,7 +33,7 @@ export default defineNuxtConfig({
   },
   fonts: {
     families: [
-      { name: 'Rubik Mono One', provider: 'google', weight: '900' },
+      { name: 'Coiny', provider: 'google', weight: '900' },
       { name: 'Geist', provider: 'google', weight: '400' },
     ],
   },

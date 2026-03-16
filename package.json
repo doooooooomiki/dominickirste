@@ -21,5 +21,9 @@
   },
   "engines": {
     "node": "24.13.0"
+  },
+  "devDependencies": {
+    "@takumi-rs/core": "^0.70.4",
+    "nuxt-og-image": "^6.0.1"
   }
 }
