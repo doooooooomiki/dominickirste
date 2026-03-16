@@ -124,11 +124,3 @@ a:not([class]) {
 .clip--hidden {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
 }
-
-.svg-text {
-  overflow: hidden;
-}
-
-.svg-text-to-be-revealed > div{
-  transform: translateY(100%);
-}
