@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'hi.',
+      meta: [
+        { name: 'theme-color', content: '#fcf237' },
+      ],
       htmlAttrs: {
         lang: 'de',
       },
