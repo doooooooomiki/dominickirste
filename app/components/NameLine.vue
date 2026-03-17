@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useIntervalFn } from '@vueuse/core'
 import { gsap } from 'gsap'
 
 interface Props {
@@ -19,6 +20,12 @@ const nameline = useTemplateRef('nameline')
 const svgcontainer = useTemplateRef('nameline-svg-container')
 const links = useTemplateRef('nameline-icon-links')
 const arrow = useTemplateRef('nameline-arrow')
+
+const datetime = ref(Date.now())
+
+useIntervalFn(() => {
+  datetime.value = Date.now()
+}, 1000)
 
 let ctx: gsap.Context
 
@@ -116,7 +123,7 @@ onUnmounted(() => ctx && ctx.revert())
           <div>
             Nue, GER
             <NuxtTime
-              :datetime="Date.now()"
+              :datetime="datetime"
               locale="de-DE"
               hour="numeric"
               minute="numeric"
