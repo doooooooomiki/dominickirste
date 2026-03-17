@@ -127,6 +127,7 @@ onUnmounted(() => ctx && ctx.revert())
               locale="de-DE"
               hour="numeric"
               minute="numeric"
+              time-zone="Europe/Berlin"
             />
           </div>
         </div>
