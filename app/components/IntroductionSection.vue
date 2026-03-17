@@ -81,30 +81,32 @@ onUnmounted(() => ctx.revert())
   <section ref="intro" class="intro">
     <div ref="intro-inner" class="intro-inner layout-center">
       <div ref="intro-content" class="intro-content layout-stack-block">
-        <div
-          class="emoji emoji--star-face"
-        >
+        <div class="emoji emoji--star-face">
           <img src="/emoji--star-face.png">
         </div>
-        <div
-          class="emoji emoji--cool-face"
-        >
+        <div class="emoji emoji--cool-face">
           <img src="/emoji--cool-face.png">
         </div>
-        <div
-          class="emoji emoji--heart-face"
-        >
+        <div class="emoji emoji--heart-face">
           <img src="/emoji--heart-face.png">
         </div>
-        <div
-          class="emoji emoji--happy-face"
-        >
+        <div class="emoji emoji--happy-face">
           <img src="/emoji--happy-face.png">
         </div>
-        <div
-          class="emoji emoji--happy-star"
-        >
-          <img src="/emojii--happy-star.png">
+        <div class="emoji emoji--happy-star">
+          <img src="/emoji--happy-star.png">
+        </div>
+        <div class="emoji emoji--satisfied-face">
+          <img src="/emoji--satisfied-face.png">
+        </div>
+        <div class="emoji emoji--hearts-on-face">
+          <img src="/emoji--hearts-on-face.png">
+        </div>
+        <div class="emoji emoji--smiling-face">
+          <img src="/emoji--smiling-face.png">
+        </div>
+        <div class="emoji emoji--surprised-face">
+          <img src="/emoji--surprised-face.png">
         </div>
         <div ref="hi" class="line-container line-container--hi">
           <p>Hi. Mein Name ist Dominic</p>
@@ -163,7 +165,7 @@ onUnmounted(() => ctx.revert())
 }
 
 .emoji--star-face {
-  right: 2%;
+  right: 4%;
   top: 8%;
 }
 
@@ -178,13 +180,33 @@ onUnmounted(() => ctx.revert())
 }
 
 .emoji--happy-face {
-  right: 4%;
+  right: 2%;
   top: 44%;
 }
 
 .emoji--happy-star {
-  right: 8%;
+  right: 14%;
   top: 28%;
+}
+
+.emoji--satisfied-face {
+  right: 24%;
+  top: 48%;
+}
+
+.emoji--hearts-on-face {
+  right: 32%;
+  top: 66%;
+}
+
+.emoji--smiling-face {
+  right: 52%;
+  top: 84%;
+}
+
+.emoji--surprised-face {
+  right: 24%;
+  top: 82%;
 }
 
 .emoji img {
