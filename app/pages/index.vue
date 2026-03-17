@@ -48,7 +48,8 @@ onUnmounted(() => ctx.revert())
 
 <style>
 main {
-  background-color: var(--color-primary);
+  background-color: transparent;
+  background: linear-gradient(to bottom, var(--color--tamago), var(--color--tamago), var(--color--tamago), var(--color--tamago),var(--color--tamago), var(--color--tamago), var(--color--tamago), #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b, var(--color--soy-sauce));
   position: relative;
   z-index: 666;
 }

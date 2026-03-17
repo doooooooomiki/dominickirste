@@ -3,7 +3,6 @@ import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 
 const intro = useTemplateRef('intro')
-const inner = useTemplateRef('intro-inner')
 const content = useTemplateRef('intro-content')
 const hi = useTemplateRef('hi')
 const home = useTemplateRef('home')
@@ -34,7 +33,7 @@ const setupGsap = () => {
   ctx = gsap.context(() => {
     gsap.timeline({
       scrollTrigger: {
-        trigger: inner.value,
+        trigger: intro.value,
         pin: content.value,
         start: 'top top',
         end: 'bottom bottom',
@@ -79,9 +78,9 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <section ref="intro" class="intro layout-stack-block">
+  <section ref="intro" class="intro">
     <div ref="intro-inner" class="intro-inner layout-center">
-      <div ref="intro-content" class="intro-content">
+      <div ref="intro-content" class="intro-content layout-stack-block">
         <div
           class="emoji emoji--star-face"
         >
@@ -124,7 +123,7 @@ onUnmounted(() => ctx.revert())
 <style>
 .intro {
   position: relative;
-  background-color: var(--color-primary);
+  background-color: transparent;
 }
 
 .intro-inner {
@@ -148,9 +147,9 @@ onUnmounted(() => ctx.revert())
 }
 
 .intro-word {
-  border: 1vw solid black;
+  border: 1vw solid var(--color--soy-sauce);
   border-radius: 16px;
-  background-color: var(--color-primary);
+  background-color: var(--color--tamago);
 }
 
 .intro-line + .intro-line {

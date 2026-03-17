@@ -38,7 +38,7 @@ onUnmounted(() => ctx.revert())
   <footer ref="outro" class="outro layout-stack">
     <div ref="outro-inner" class="outro-inner layout-stack-block">
       <div class="layout-center">
-        <NameLine as="h2" dir="up" />
+        <NameLine as="h2" dir="up" color="soy-sauce" />
       </div>
     </div>
   </footer>
@@ -46,7 +46,7 @@ onUnmounted(() => ctx.revert())
 
 <style>
 .outro {
-  background-color: var(--color-primary);
+  background-color: var(--color--tamago);
   position: relative;
   z-index: 1;
   block-size: 100svh;

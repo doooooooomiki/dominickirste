@@ -194,7 +194,7 @@ onUnmounted(() => ctx.revert())
 
 <style>
 .tech-stack {
-  background: linear-gradient(195deg, #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b);
+  background-color: transparent;
   block-size: 600vh;
 }
 
@@ -301,49 +301,49 @@ onUnmounted(() => ctx.revert())
 }
 
 .card--html {
-  color: white;
+  color: var(--color--shiro);
   background-color: #f16524;
   border-color: #e54c20;
 }
 
 .card--css {
-  color: white;
+  color: var(--color--shiro);
   background-color: #1d73b7;
   border-color: #33a9db;
 }
 
 .card--tailwind {
-  color: white;
+  color: var(--color--shiro);
   background-color: #3fc3ca;
   border-color: #3ebea6;
 }
 
 .card--js {
-  color: white;
+  color: var(--color--shiro);
   background-color: #fbde35;
   border-color: #eec726;
 }
 
 .card--ts {
-  color: white;
+  color: var(--color--shiro);
   background-color: #3191cf;
   border-color: #0c416d;
 }
 
 .card--vue {
-  color: white;
+  color: var(--color--shiro);
   background-color: #53d799;
   border-color: #39ae64;
 }
 
 .card--nuxt {
-  color: white;
+  color: var(--color--shiro);
   background-color: #020420;
   border-color: #00DC82;
 }
 
 .card--gsap {
-  color: white;
+  color: var(--color--shiro);
   border-color: #7fbff2;
 }
 </style>

@@ -3,7 +3,9 @@
 }
 
 :root {
-  --color-primary: #fcf237;
+  --color--tamago: #fcf237;
+  --color--soy-sauce: black;
+  --color--shiro: white;
   overflow-x: hidden;
 }
 
@@ -58,11 +60,15 @@ h2 {
 }
 
 .color--tamago {
-  color: var(--color-primary);
+  color: var(--color--tamago);
 }
 
 .color--soy-sauce {
-  color: black;
+  color: var(--color--soy-sauce);
+}
+
+.color--shiro {
+  color: var(--color--shiro);
 }
 
 p {

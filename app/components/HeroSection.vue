@@ -45,7 +45,7 @@ onUnmounted(() => ctx.revert())
     >
       <div class="hero-content">
         <div class="layout-center layout-cover hero-cover">
-          <NameLine as="h1" :reveal="true" />
+          <NameLine as="h1" :reveal="true" color="soy-sauce" />
         </div>
       </div>
       <div
@@ -73,7 +73,7 @@ onUnmounted(() => ctx.revert())
 <style>
 .hero {
   block-size: 300vh;
-  background-color: var(--color-primary);
+  background-color: var(--color--shiro);
   width: 100%;
 }
 
@@ -91,11 +91,13 @@ onUnmounted(() => ctx.revert())
 
 .hero-content--reveal {
   clip-path: circle(0% at 50% 50%);
+  transform: translateZ(0);
+  will-change: transform;
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: var(--color--soy-sauce);
 }
 
 .hero-img {

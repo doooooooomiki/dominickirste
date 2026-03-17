@@ -4,7 +4,7 @@ import { gsap } from 'gsap'
 
 interface Props {
   as?: 'h1' | 'h2' | 'h3' | 'div'
-  color?: 'soy-sauce' | 'tamago'
+  color?: 'soy-sauce' | 'tamago' | 'shiro'
   dir?: 'up' | 'down'
   reveal?: boolean
 }
@@ -61,6 +61,7 @@ onUnmounted(() => ctx && ctx.revert())
     :class="{
       'color--soy-sauce': color === 'soy-sauce',
       'color--tamago': color === 'tamago',
+      'color--shiro': color === 'shiro',
       'nameline--to-be-revealed': reveal,
     }"
   >
