@@ -36,7 +36,7 @@ onUnmounted(() => ctx.revert())
 <template>
   <NuxtRouteAnnouncer />
   <div ref="smooth-wrapper">
-    <div ref="smooth-content">
+    <div ref="smooth-content" class="background--gradient">
       <main class="layout-stack main">
         <SectionHero />
         <SectionIntroduction />
@@ -46,12 +46,3 @@ onUnmounted(() => ctx.revert())
     </div>
   </div>
 </template>
-
-<style>
-main {
-  background-color: transparent;
-  background: linear-gradient(to bottom, var(--color--tamago), var(--color--tamago), var(--color--tamago), var(--color--tamago),var(--color--tamago), var(--color--tamago), var(--color--tamago), #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b, var(--color--soy-sauce));
-  position: relative;
-  z-index: 666;
-}
-</style>

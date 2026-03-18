@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import Matter from 'matter-js'
-import { useResizeObserver, useElementBounding } from '@vueuse/core'
+import { useResizeObserver, useWindowSize } from '@vueuse/core'
 
 const outro = useTemplateRef('outro')
 const outroinner = useTemplateRef('outro-inner')
 const mattercontainer = useTemplateRef('matter-container')
 
-const { width, height } = useElementBounding(mattercontainer)
+const { width, height } = useWindowSize()
 
 let ctx: gsap.Context
 
@@ -15,8 +15,6 @@ let engine: Matter.Engine
 let render: Matter.Render
 let runner: Matter.Runner
 let ground: Matter.Body
-let wallLeft: Matter.Body
-let wallRight: Matter.Body
 
 const setupMatter = () => {
   if (!mattercontainer.value) return
@@ -40,26 +38,18 @@ const setupMatter = () => {
     },
   })
 
-  ground = Bodies.rectangle(width.value * 0.5, height.value, 10_000, 16, {
-    isStatic: true,
-    render: {
-      fillStyle: 'transparent',
+  ground = Bodies.rectangle(
+    width.value * 0.5,
+    height.value,
+    10_000,
+    16,
+    {
+      isStatic: true,
+      render: {
+        fillStyle: 'transparent',
+      },
     },
-  })
-
-  wallLeft = Bodies.rectangle(0, height.value * 0.5, 16, height.value, {
-    isStatic: true,
-    render: {
-      fillStyle: 'transparent',
-    },
-  })
-
-  wallRight = Bodies.rectangle(width.value, height.value * 0.5, 16, height.value, {
-    isStatic: true,
-    render: {
-      fillStyle: 'transparent',
-    },
-  })
+  )
 
   const randomX = gsap.utils.random(200, width.value - 200, 4, true)
   const randomY = gsap.utils.random(-240, -24, 2, true)
@@ -170,8 +160,6 @@ const setupMatter = () => {
 
   Composite.add(engine.world, [
     ground,
-    wallLeft,
-    wallRight,
     emojiCoolFace,
     emojiHappyFace,
     emojiHappyStar,
@@ -197,21 +185,12 @@ const setupGsap = () => {
     gsap.timeline({
       scrollTrigger: {
         trigger: outro.value,
-        start: 'top bottom',
+        start: 'top top',
         end: 'bottom bottom',
         scrub: true,
       },
+      onComplete: () => setupMatter(),
     })
-      .fromTo(outroinner.value,
-        {
-          ease: 'none',
-          yPercent: -100,
-        },
-        {
-          ease: 'none',
-          yPercent: 0,
-          onComplete: () => setupMatter(),
-        })
   }, outro.value)
 }
 
@@ -220,8 +199,6 @@ useResizeObserver(mattercontainer, () => {
   render.canvas.width = width.value
   render.canvas.height = height.value
   Matter.Body.setPosition(ground, { x: width.value * 0.5, y: height.value })
-  Matter.Body.setPosition(wallLeft, { x: 0, y: height.value * 0.5 })
-  Matter.Body.setPosition(wallRight, { x: width.value, y: height.value * 0.5 })
 })
 
 onMounted(() => setupGsap())
@@ -231,14 +208,14 @@ onUnmounted(() => ctx.revert())
 
 <template>
   <footer ref="outro" class="outro layout-stack">
+    <div ref="matter-container" class="matter-container" />
     <div ref="outro-inner" class="outro-inner layout-stack-block">
-      <div ref="matter-container" class="matter-container layout-center" />
       <div class="outro-content layout-center layout-cover">
         <NameLine
           as="h2"
           dir="up"
-          color="soy-sauce"
-          background="tamago"
+          color="shiro"
+          background="soy-sauce"
         />
       </div>
     </div>
@@ -247,10 +224,8 @@ onUnmounted(() => ctx.revert())
 
 <style>
 .outro {
-  background-color: var(--color--tamago);
   position: relative;
-  z-index: 1;
-  block-size: 100svh;
+  block-size: 100vh;
 }
 
 .matter-container {
@@ -261,11 +236,11 @@ onUnmounted(() => ctx.revert())
 }
 
 .outro-inner {
-  background-color: inherit;
   position: inherit;
   block-size: inherit;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .outro-content {
