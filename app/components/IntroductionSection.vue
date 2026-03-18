@@ -14,19 +14,19 @@ const setupGsap = () => {
 
   const splitHi = SplitText.create(hi.value, {
     type: 'words, lines',
-    wordsClass: 'intro-word',
+    wordsClass: 'intro-word pill',
     linesClass: 'intro-line intro-line--hi',
   })
 
   const splitHome = SplitText.create(home.value, {
     type: 'words, lines',
-    wordsClass: 'intro-word',
+    wordsClass: 'intro-word pill',
     linesClass: 'intro-line intro-line--home',
   })
 
   const splitShakehands = SplitText.create(handshake.value, {
     type: 'words, lines',
-    wordsClass: 'intro-word',
+    wordsClass: 'intro-word pill',
     linesClass: 'intro-line intro-line--handshake',
   })
 
@@ -149,9 +149,8 @@ onUnmounted(() => ctx.revert())
 }
 
 .intro-word {
-  border: 0.8vw solid var(--color--soy-sauce);
-  border-radius: 24px;
-  background-color: var(--color--tamago);
+  --color-foreground: var(--color--soy-sauce);
+  --color-background: var(--color--tamago);
 }
 
 .intro-line + .intro-line {

@@ -56,54 +56,26 @@ useIntervalFn(() => {
 </script>
 
 <template>
-  <div
-    class="linkpill"
+  <a
+    :href="hrefs.get(type)"
+    target="_blank"
+    class="pill pill--icon-link"
     :class="[foregrounds.get(foreground), backgrounds.get(background)]"
   >
-    <a :href="hrefs.get(type)" target="_blank" class="linkpill-link">
-      <div class="linkpills-content">
-        <div class="icon">
-          <component :is="icons.get(type)" />
-        </div>
-        <div>
-          {{ texts.get(type) }}
-          <template v-if="type === 'location'">
-            <NuxtTime
-              :datetime="datetime"
-              locale="de-DE"
-              hour="numeric"
-              minute="numeric"
-              time-zone="Europe/Berlin"
-            />
-          </template>
-        </div>
-      </div>
-    </a>
-  </div>
+    <div class="icon">
+      <component :is="icons.get(type)" />
+    </div>
+    <div>
+      {{ texts.get(type) }}
+      <template v-if="type === 'location'">
+        <NuxtTime
+          :datetime="datetime"
+          locale="de-DE"
+          hour="numeric"
+          minute="numeric"
+          time-zone="Europe/Berlin"
+        />
+      </template>
+    </div>
+  </a>
 </template>
-
-<style>
-.linkpill {
-  font-size: var(--step--2);
-}
-
-.linkpill-link {
-  color: var(--color-foreground, var(--color--soy-sauce));
-  background-color: var(--color-background, var(--color--shiro));
-  display: inline-block;
-  border: 4px solid var(--color-foreground, var(--color--soy-sauce));
-  border-radius: 24px;
-  padding: 8px;
-}
-
-.linkpills-content {
-  display: flex;
-  align-items: center;
-  gap: 0.2ch;
-}
-
-.icon {
-  width: 32px;
-  height: 32px;
-}
-</style>

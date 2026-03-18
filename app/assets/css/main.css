@@ -154,3 +154,24 @@ a:not([class]) {
 .clip--hidden {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
 }
+
+.pill {
+  color: var(--color-foreground, var(--color--soy-sauce));
+  background-color: var(--color-background, var(--color--shiro));
+  display: inline-block;
+  border: max(8px, 0.8vw)solid var(--color-foreground, var(--color--soy-sauce));
+  border-radius: 24px;
+  padding: 8px;
+}
+
+.pill--icon-link {
+  font-size: var(--step--2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2ch;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+}
