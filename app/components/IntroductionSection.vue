@@ -149,8 +149,8 @@ onUnmounted(() => ctx.revert())
 }
 
 .intro-word {
-  border: 1vw solid var(--color--soy-sauce);
-  border-radius: 16px;
+  border: 0.8vw solid var(--color--soy-sauce);
+  border-radius: 24px;
   background-color: var(--color--tamago);
 }
 

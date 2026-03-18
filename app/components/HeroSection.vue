@@ -63,7 +63,7 @@ onUnmounted(() => ctx.revert())
           />
         </div>
         <div class="layout-center layout-cover hero-cover">
-          <NameLine as="div" color="tamago" />
+          <NameLine as="div" color="tamago" background="soy-sauce" />
         </div>
       </div>
     </div>

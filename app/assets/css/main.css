@@ -71,6 +71,30 @@ h2 {
   color: var(--color--shiro);
 }
 
+.foreground--tamago {
+  --color-foreground: var(--color--tamago);
+}
+
+.foreground--soy-sauce {
+  --color-foreground: var(--color--soy-sauce);
+}
+
+.foreground--shiro {
+  --color-foreground: var(--color--shiro);
+}
+
+.background--tamago {
+  --color-background: var(--color--tamago);
+}
+
+.background--soy-sauce {
+  --color-background: var(--color--soy-sauce);
+}
+
+.background--shiro {
+  --color-background: var(--color--shiro);
+}
+
 p {
   margin: unset;
   font-size: var(--step-5);

@@ -228,7 +228,12 @@ onUnmounted(() => ctx.revert())
     <div ref="outro-inner" class="outro-inner layout-stack-block">
       <div ref="matter-container" class="matter-container layout-center" />
       <div class="outro-content layout-center layout-cover">
-        <NameLine as="h2" dir="up" color="soy-sauce" />
+        <NameLine
+          as="h2"
+          dir="up"
+          color="soy-sauce"
+          background="tamago"
+        />
       </div>
     </div>
   </footer>
@@ -258,6 +263,8 @@ onUnmounted(() => ctx.revert())
 }
 
 .outro-content {
-  position: relative
+  position: relative;
+  padding-block: unset;
+  height: 100%;
 }
 </style>
