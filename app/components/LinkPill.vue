@@ -4,8 +4,8 @@ import { IconBluesky, IconCodepen, IconGithub, IconLinkedin, IconLocation } from
 
 interface Props {
   type: 'github' | 'linkedin' | 'codepen' | 'bluesky' | 'location'
-  foreground?: 'soy-sauce' | 'tamago' | 'shiro'
-  background?: 'soy-sauce' | 'tamago' | 'shiro'
+  foreground?: 'soy-sauce' | 'tamago' | 'shiro' | 'kodama'
+  background?: 'soy-sauce' | 'tamago' | 'shiro' | 'kodama'
 }
 
 withDefaults(defineProps<Props>(), {
@@ -33,12 +33,14 @@ const foregrounds = new Map([
   ['soy-sauce', 'foreground--soy-sauce'],
   ['tamago', 'foreground--tamago'],
   ['shiro', 'foreground--shiro'],
+  ['kodama', 'foreground--kodama'],
 ])
 
 const backgrounds = new Map([
   ['soy-sauce', 'background--soy-sauce'],
   ['tamago', 'background--tamago'],
   ['shiro', 'background--shiro'],
+  ['kodama', 'background--kodama'],
 ])
 
 const texts = new Map([

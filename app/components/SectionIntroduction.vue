@@ -109,13 +109,13 @@ onUnmounted(() => ctx.revert())
           <img src="/emoji--surprised-face.png">
         </div>
         <div ref="hi" class="line-container line-container--hi">
-          <p>Hi. Mein Name ist Dominic</p>
+          <p>Hi. <br> Mein Name ist Dominic</p>
         </div>
         <div ref="home" class="line-container line-container--home">
           <p>und mein Zuhause ist das Frontend.</p>
         </div>
         <div ref="handshake" class="line-container line-container--handshake">
-          <p>Dort wo Design und Code sich die Hand geben.</p>
+          <p>Wo Design und Code sich die Hand geben.</p>
         </div>
       </div>
     </div>

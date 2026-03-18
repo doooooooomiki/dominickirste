@@ -4,7 +4,7 @@ import { gsap } from 'gsap'
 interface Props {
   as?: 'h1' | 'h2' | 'h3' | 'div'
   color?: 'soy-sauce' | 'tamago' | 'shiro'
-  background?: 'soy-sauce' | 'tamago' | 'shiro'
+  background?: 'soy-sauce' | 'tamago' | 'shiro' | 'kodama'
   dir?: 'up' | 'down'
   reveal?: boolean
 }
@@ -78,13 +78,21 @@ onUnmounted(() => ctx && ctx.revert())
         </div>
       </div>
     </div>
-    <div ref="nameline-icon-links-container" class="nameline-icon-links-container">
+    <div class="nameline-icon-links-container">
       <div ref="nameline-icon-links" class="nameline-icon-links icon-links">
-        <LinkPill type="github" :foreground="color" :background="background" />
-        <LinkPill type="linkedin" :foreground="color" :background="background" />
-        <LinkPill type="codepen" :foreground="color" :background="background" />
-        <LinkPill type="bluesky" :foreground="color" :background="background" />
-        <LinkPill type="location" :foreground="color" :background="background" />
+        <div class="flex-line-break">
+          <LinkPill type="location" :foreground="color" :background="background" />
+        </div>
+        <div class="flex-line-break">
+          <div class="flex-line-break">
+            <LinkPill type="github" :foreground="color" :background="background" />
+            <LinkPill type="linkedin" :foreground="color" :background="background" />
+          </div>
+          <div class="flex-line-break">
+            <LinkPill type="codepen" :foreground="color" :background="background" />
+            <LinkPill type="bluesky" :foreground="color" :background="background" />
+          </div>
+        </div>
       </div>
     </div>
     <svg
@@ -151,8 +159,15 @@ onUnmounted(() => ctx && ctx.revert())
 
 .icon-links {
   display: flex;
-  justify-content: end;
+  justify-content: start;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.flex-line-break {
+  display: inherit;
+  justify-content: inherit;
+  gap: inherit;
+  flex-wrap: inherit;
 }
 </style>
