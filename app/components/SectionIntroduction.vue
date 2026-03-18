@@ -161,53 +161,53 @@ onUnmounted(() => ctx.revert())
 
 .emoji {
   position: absolute;
-  width: var(--step-5);
-  height: var(--step-5);
+  width: 128px;
+  height: 128px;
 }
 
 .emoji--star-face {
-  right: 4%;
+  left: -8%;
   top: 8%;
 }
 
+.emoji--happy-star {
+  left: 38%;
+  top: 10%;
+}
+
 .emoji--cool-face {
-  right: 4%;
-  top: 80%;
+  left: 79%;
+  top: 9%;
 }
 
 .emoji--heart-face {
-  right: 2%;
-  top: 64%;
+  left: -4%;
+  top: 36%;
 }
 
 .emoji--happy-face {
-  right: 2%;
-  top: 44%;
-}
-
-.emoji--happy-star {
-  right: 14%;
-  top: 28%;
+  left: 39%;
+  top: 39%;
 }
 
 .emoji--satisfied-face {
-  right: 24%;
-  top: 48%;
-}
-
-.emoji--hearts-on-face {
-  right: 32%;
-  top: 66%;
+  left: 80%;
+  top: 40%;
 }
 
 .emoji--smiling-face {
-  right: 52%;
-  top: 84%;
+  left: -8%;
+  top: 66%;
+}
+
+.emoji--hearts-on-face {
+  left: 74%;
+  top: 69%;
 }
 
 .emoji--surprised-face {
-  right: 24%;
-  top: 82%;
+  left: 32%;
+  top: 66%;
 }
 
 .emoji img {
