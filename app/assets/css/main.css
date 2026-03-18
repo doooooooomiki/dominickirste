@@ -162,6 +162,7 @@ a:not([class]) {
   border: max(8px, 0.8vw)solid var(--color-foreground, var(--color--soy-sauce));
   border-radius: 24px;
   padding: 8px;
+  line-height: 1;
 }
 
 .pill--icon-link {

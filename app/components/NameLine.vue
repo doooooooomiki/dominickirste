@@ -115,7 +115,7 @@ onUnmounted(() => ctx && ctx.revert())
 
 .nameline-svg-container {
   .nameline--to-be-revealed & {
-    transform: translateY(100%);
+    transform: translateY(102%);
   }
 }
 

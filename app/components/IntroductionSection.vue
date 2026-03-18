@@ -146,15 +146,17 @@ onUnmounted(() => ctx.revert())
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 8px;
+}
+
+.intro-line > p {
+  display: inline-flex;
+  gap: 8px;
 }
 
 .intro-word {
   --color-foreground: var(--color--soy-sauce);
   --color-background: var(--color--tamago);
-}
-
-.intro-line + .intro-line {
-  margin-block-start: 1vw;
 }
 
 .emoji {
