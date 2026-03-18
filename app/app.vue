@@ -38,11 +38,11 @@ onUnmounted(() => ctx.revert())
   <div ref="smooth-wrapper">
     <div ref="smooth-content">
       <main class="layout-stack main">
-        <HeroSection />
-        <IntroductionSection />
-        <TechStackSection />
+        <SectionHero />
+        <SectionIntroduction />
+        <SectionTechStack />
       </main>
-      <OutroSection />
+      <SectionOutro />
     </div>
   </div>
 </template>
