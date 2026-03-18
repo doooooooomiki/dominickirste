@@ -130,12 +130,12 @@ onUnmounted(() => ctx.revert())
 
 .intro-inner {
   position: inherit;
-  block-size: 800svh;
+  block-size: 800vh;
 }
 
 .intro-content {
   position: inherit;
-  block-size: 100svh;
+  block-size: 100vh;
 }
 
 .line-container {
