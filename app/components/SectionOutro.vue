@@ -188,6 +188,7 @@ const setupGsap = () => {
         start: 'top top',
         end: 'bottom bottom',
         scrub: true,
+        once: true,
         onEnter: () => setupMatter(),
       },
     })
