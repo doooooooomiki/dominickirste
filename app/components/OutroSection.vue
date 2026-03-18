@@ -40,21 +40,32 @@ const setupMatter = () => {
     },
   })
 
-  ground = Bodies.rectangle(width.value * 0.5, height.value, width.value, 60, { isStatic: true, render: {
-    fillStyle: 'transparent',
-  } })
-  wallLeft = Bodies.rectangle(0, height.value * 0.5, 60, height.value, { isStatic: true, render: {
-    fillStyle: 'transparent',
-  } })
-  wallRight = Bodies.rectangle(width.value, height.value * 0.5, 60, height.value, { isStatic: true, render: {
-    fillStyle: 'transparent',
-  } })
+  ground = Bodies.rectangle(width.value * 0.5, height.value, 10_000, 16, {
+    isStatic: true,
+    render: {
+      fillStyle: 'transparent',
+    },
+  })
 
-  const randomX = gsap.utils.random(80, width.value - 80, 4, true)
+  wallLeft = Bodies.rectangle(0, height.value * 0.5, 16, height.value, {
+    isStatic: true,
+    render: {
+      fillStyle: 'transparent',
+    },
+  })
+
+  wallRight = Bodies.rectangle(width.value, height.value * 0.5, 16, height.value, {
+    isStatic: true,
+    render: {
+      fillStyle: 'transparent',
+    },
+  })
+
+  const randomX = gsap.utils.random(200, width.value - 200, 4, true)
   const randomY = gsap.utils.random(-240, -24, 2, true)
 
   const options = {
-    friction: 0.00001, restitution: 0.5, density: 0.001,
+    friction: 0.001, restitution: 0.5, density: 0.004,
 
   }
 
@@ -208,14 +219,9 @@ useResizeObserver(mattercontainer, () => {
   if (!mattercontainer.value || !render) return
   render.canvas.width = width.value
   render.canvas.height = height.value
-  Matter.Composite.remove(engine.world, ground)
-  ground = Matter.Bodies.rectangle(width.value * 0.5, height.value, width.value, 60, { isStatic: true, render: {
-    fillStyle: 'transparent',
-  } })
-  Matter.Composite.add(engine.world, [ground])
   Matter.Body.setPosition(ground, { x: width.value * 0.5, y: height.value })
-  Matter.Body.setPosition(wallLeft, { x: 16, y: height.value * 0.5 })
-  Matter.Body.setPosition(wallRight, { x: width.value - 16, y: height.value * 0.5 })
+  Matter.Body.setPosition(wallLeft, { x: 0, y: height.value * 0.5 })
+  Matter.Body.setPosition(wallRight, { x: width.value, y: height.value * 0.5 })
 })
 
 onMounted(() => setupGsap())

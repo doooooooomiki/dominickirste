@@ -126,7 +126,7 @@ onUnmounted(() => ctx && ctx.revert())
 
 .nameline-icon-links {
   .nameline--to-be-revealed & {
-    transform: translateY(100%);
+    transform: translateY(102%);
   }
 }
 
