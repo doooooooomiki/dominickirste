@@ -18,6 +18,13 @@ let ground: Matter.Body
 
 const setupMatter = () => {
   if (!mattercontainer.value) return
+
+  useHead({
+    htmlAttrs: {
+      class: 'matter-happend',
+    },
+  })
+
   const Engine = Matter.Engine
   const Render = Matter.Render
   const Runner = Matter.Runner
