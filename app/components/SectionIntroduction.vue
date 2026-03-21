@@ -2,38 +2,30 @@
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 
-const intro = useTemplateRef('intro')
-const content = useTemplateRef('intro-content')
+const inner = useTemplateRef('introduction-inner')
+const content = useTemplateRef('introduction-content')
 const hi = useTemplateRef('hi')
 const home = useTemplateRef('home')
 const handshake = useTemplateRef('handshake')
 let ctx: gsap.Context
 
 const setupGsap = () => {
-  if (!intro.value || !content.value || !hi.value) return
+  if (!inner.value || !content.value || !hi.value || !home.value || !handshake.value) return
 
-  const splitHi = SplitText.create(hi.value, {
+  const splitConfig: SplitText.Vars = {
     type: 'words, lines',
-    wordsClass: 'intro-word pill',
-    linesClass: 'intro-line intro-line--hi',
-  })
+    wordsClass: 'introduction-word pill',
+    linesClass: 'introduction-line',
+  }
 
-  const splitHome = SplitText.create(home.value, {
-    type: 'words, lines',
-    wordsClass: 'intro-word pill',
-    linesClass: 'intro-line intro-line--home',
-  })
-
-  const splitShakehands = SplitText.create(handshake.value, {
-    type: 'words, lines',
-    wordsClass: 'intro-word pill',
-    linesClass: 'intro-line intro-line--handshake',
-  })
+  const splitHi = SplitText.create(hi.value, splitConfig)
+  const splitHome = SplitText.create(home.value, splitConfig)
+  const splitShakehands = SplitText.create(handshake.value, splitConfig)
 
   ctx = gsap.context(() => {
     gsap.timeline({
       scrollTrigger: {
-        trigger: intro.value,
+        trigger: inner.value,
         pin: content.value,
         start: 'top top',
         end: 'bottom bottom',
@@ -69,7 +61,7 @@ const setupGsap = () => {
         rotation: 'random(-24, 24)',
         duration: 1,
       })
-  }, intro.value)
+  }, inner.value)
 }
 
 onMounted(() => setupGsap())
@@ -78,17 +70,17 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <section ref="intro" class="intro">
-    <div ref="intro-inner" class="intro-inner layout-center">
-      <div ref="intro-content" class="intro-content layout-stack-block">
+  <section class="introduction">
+    <div ref="introduction-inner" class="introduction-inner layout-center">
+      <div ref="introduction-content" class="introduction-content layout-stack-block">
         <LayerEmojis />
-        <div ref="hi" class="line-container line-container--hi">
+        <div ref="hi" class="introduction-line-container introduction-line-container--hi">
           <p>Hi. <br> Mein Name ist Dominic</p>
         </div>
-        <div ref="home" class="line-container line-container--home">
+        <div ref="home" class="introduction-line-container introduction-line-container--home">
           <p>und mein Zuhause ist das Frontend.</p>
         </div>
-        <div ref="handshake" class="line-container line-container--handshake">
+        <div ref="handshake" class="introduction-line-container introduction-line-container--handshake">
           <p>Wo Design und Code sich die Hand geben.</p>
         </div>
       </div>
@@ -97,22 +89,22 @@ onUnmounted(() => ctx.revert())
 </template>
 
 <style>
-.intro {
+.introduction {
   position: relative;
   background-color: transparent;
 }
 
-.intro-inner {
+.introduction-inner {
   position: inherit;
   block-size: 800vh;
 }
 
-.intro-content {
+.introduction-content {
   position: inherit;
   block-size: 100vh;
 }
 
-.line-container {
+.introduction-line-container {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -123,12 +115,12 @@ onUnmounted(() => ctx.revert())
   gap: 8px;
 }
 
-.intro-line > p {
+.introduction-line > p {
   display: inline-flex;
   gap: 8px;
 }
 
-.intro-word {
+.introduction-word {
   --color-foreground: var(--color--soy-sauce);
   --color-background: var(--color--tamago);
 }
