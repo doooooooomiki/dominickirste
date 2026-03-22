@@ -1,67 +1,60 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 
-const techstack = useTemplateRef('tech-stack')
-const techstackinner = useTemplateRef('tech-stack-inner')
-const wrapper = useTemplateRef('tech-stack-wrapper')
-const gallery = useTemplateRef('tech-stack-gallery')
-const text = useTemplateRef('tech-stack-text-wrapper')
-const heading = useTemplateRef('tech-stack-heading')
-const paragraph = useTemplateRef('tech-stack-paragraph')
+const techstack = useTemplateRef('techstack')
+const inner = useTemplateRef('techstack-inner')
+
+const pinContainerHeadline = useTemplateRef('techstack-pin-container--headline')
+const pinHeadline = useTemplateRef('techstack-pin--headline')
+
+const pinContainerCards = useTemplateRef('techstack-pin-container--cards')
+const pinCards = useTemplateRef('techstack-pin--cards')
+const cards = useTemplateRef('techstack-cards')
+
+const pinContainerParagraph = useTemplateRef('techstack-pin-container--paragraph')
+const pinParagraph = useTemplateRef('techstack-pin--paragraph')
 
 let ctx: gsap.Context
 
 const setupGsap = () => {
-  if (!wrapper.value) return
+  if (!techstack.value) return
 
   ctx = gsap.context(() => {
-    if (!techstack.value || !techstackinner.value || !wrapper.value || !gallery.value || !text.value) return
+    if (!techstack.value || !inner.value || !pinContainerHeadline.value) return
 
     ScrollTrigger.create({
-      trigger: techstack.value,
-      pin: text.value,
+      trigger: pinContainerHeadline.value,
+      pin: pinHeadline.value,
       scrub: true,
       start: 'top top',
-      end: 'bottom bottom',
-      pinSpacing: false,
+      end: () => `+=${pinHeadline.value!.clientHeight * 3}`,
       invalidateOnRefresh: true,
+      pinSpacing: false,
     })
 
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: techstack.value,
-        start: 'center center',
-        end: 'center center',
-        scrub: 1,
+    gsap.set(pinContainerCards.value, { height: cards.value!.scrollWidth * 1.4 })
+
+    const scrollTween = gsap.fromTo(cards.value,
+      {
+        x: () => techstack.value!.clientWidth + cards.value!.firstElementChild!.clientWidth,
       },
-    })
-      .to(heading.value, {
-        autoAlpha: 0,
-        duration: 0.8,
-      })
-      .to(paragraph.value, {
-        autoAlpha: 1,
-        duration: 0.8,
+      {
+        x: () => -(cards.value!.scrollWidth + cards.value!.firstElementChild!.clientWidth),
+        ease: 'none', // <-- IMPORTANT!
+        scrollTrigger: {
+          trigger: pinContainerCards.value,
+          pin: pinCards.value,
+          scrub: true,
+          start: 'top top',
+          end: () => `+=${cards.value!.scrollWidth * 1.4 + cards.value!.firstElementChild!.clientWidth}`,
+          invalidateOnRefresh: true,
+          pinSpacing: false,
+        },
       })
 
-    const scrollTween = gsap.fromTo(gallery.value, {
-      x: () => techstack.value!.clientWidth + gallery.value!.firstElementChild!.clientWidth,
-    },
-    {
-      x: () => -(gallery.value!.scrollWidth + gallery.value!.firstElementChild!.clientWidth),
-      ease: 'none', // <-- IMPORTANT!
-      scrollTrigger: {
-        trigger: techstack.value,
-        pin: wrapper.value,
-        scrub: true,
-        start: 'top top',
-        end: 'bottom bottom',
-        invalidateOnRefresh: true,
-      },
-    })
-
-    gsap.utils.toArray<HTMLElement>(gallery.value.childNodes).forEach((card) => {
+    gsap.utils.toArray<HTMLElement>(cards.value!.childNodes).forEach((card) => {
       const values = {
         x: gsap.utils.random(-12, 12),
         y: gsap.utils.random(-12, 12),
@@ -83,10 +76,35 @@ const setupGsap = () => {
           start: 'left 120%',
           end: 'right -20%',
           scrub: true,
+          pinSpacing: false,
         },
       })
     })
-  }, wrapper.value)
+
+    const splitConfig: SplitText.Vars = {
+      type: 'words, lines',
+      wordsClass: 'introduction-word pill',
+      linesClass: 'introduction-line',
+    }
+
+    const splitParagraph = SplitText.create(pinParagraph.value, splitConfig)
+
+    gsap.from(splitParagraph.words, {
+      scrollTrigger: {
+        trigger: pinContainerParagraph.value,
+        pin: pinParagraph.value,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+      autoAlpha: 0,
+      stagger: 0.2,
+      ease: 'back',
+      rotation: 'random(-24, 24)',
+      duration: 1,
+    })
+  }, techstack.value)
 }
 
 onMounted(() => setupGsap())
@@ -95,20 +113,11 @@ onUnmounted(() => ctx.revert())
 </script>
 
 <template>
-  <section
-    ref="tech-stack"
-    class="tech-stack"
-  >
-    <div class="layout-center">
-      <div
-        ref="tech-stack-inner"
-        class="tech-stack-inner"
-      >
-        <div
-          ref="tech-stack-text-wrapper"
-          class="tech-stack-text-wrapper layout-stack-block"
-        >
-          <div ref="tech-stack-heading" class="svg-text">
+  <section ref="techstack" class="techstack">
+    <div ref="techstack-inner" class="techstack-inner layout-center">
+      <div ref="techstack-pin-container--headline" class="techstack-pin-container techstack-pin-container--headline">
+        <div ref="techstack-pin--headline" class="techstack-pin techstack-pin--headline layout-stack-block">
+          <div ref="techstack-headline" class="svg-text techstack-headline">
             <h2 class="sr-only">
               Wellen sind zum Surfen da
             </h2>
@@ -118,25 +127,11 @@ onUnmounted(() => ctx.revert())
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.05 2.9 292.95 34.95"><path fill="currentcolor" d="M15 2.9q5.95 0 10.15 2.45t4.2 5.2q0 .75-.33 1.27-.32.53-.79.75-.48.23-1.03.23-.9 0-2.7-.92-1.8-.93-4-1.86-2.2-.92-4.05-.92-2.95 0-2.95 2.4 0 .75.47 1.42.48.68 1.53 1.4 1.05.73 2.05 1.28t2.75 1.47q1.75.93 2.95 1.63 3.85 2.2 5.4 4.2t1.55 4.6q0 10.35-13.95 10.35-2.75 0-5.32-.55-2.58-.55-4.5-1.45-1.93-.9-3.41-2Q1.55 32.75.8 31.6t-.75-2.15q0-1.1.72-1.88.73-.77 2.13-.77 1.05 0 5.05 1.33 4 1.32 6.45 1.32 2.25 0 2.25-1.55 0-.45-.18-.83-.17-.37-.59-.75-.43-.37-.95-.69-.53-.33-1.45-.83-.93-.5-1.85-1-.93-.5-2.43-1.3t-2.9-1.6q-1.85-1.05-3.17-2.6-1.33-1.55-1.93-3.08Q.6 13.7.6 12.4q0-4.2 3.75-6.85T15 2.9m51.3 6.35v14.9q0 7.3-3.52 10.48-3.53 3.17-11.88 3.17-7.95 0-11.67-3.4Q35.5 31 35.5 24.15V9.25q0-2.65 1.58-4.33 1.57-1.67 3.97-1.67 2.95 0 4.48 1.1 1.52 1.1 1.52 4.45v16.3q.05 1.6.53 2.55.47.95 1.27 1.33.8.37 2.05.37t2.05-.3 1.18-.95q.37-.65.5-1.3.12-.65.12-1.7V8.75q0-1.7.43-2.85.42-1.15 1.3-1.7.87-.55 1.8-.75.92-.2 2.22-.2 2.9 0 4.35 1.4t1.45 4.6m25.35 3.95q0-2.4-1.75-3.3T84 9v8.65q3.9 0 5.78-.98 1.87-.97 1.87-3.47M84 30q0 7.5-5.85 7.5-2.95 0-4.32-1.58-1.38-1.57-1.38-5.57V9.25q0-2.9 1.58-4.43Q75.6 3.3 78.15 3.3h10.5q6.15 0 9.95 2.87 3.8 2.88 3.8 7.38 0 3.4-1.42 5.33-1.43 1.92-4.58 2.82 2.4.15 4.45 2.32 2.05 2.18 2.05 5.43 0 3.3-.62 5.07-.63 1.78-1.78 2.38t-3.25.6q-2.95 0-4.32-1.23-1.38-1.22-1.38-3.72 0-3.1-.6-4.78-.6-1.67-1.55-2.17t-2.65-.5l-2.75.05zm36.05.55q0 3.4-1.5 5.18-1.5 1.77-4.35 1.77-2.7 0-4.2-1.62-1.5-1.63-1.5-5.53V9.25q0-1.6.42-2.78.43-1.17 1.23-1.87t1.8-1.03q1-.32 2.25-.32h16.4q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.22 3.07-1.23.88-4.03.88h-11.05v5.85h8.8q1.35 0 2.28.2.92.2 1.5.67.57.48.8 1.15.22.68.22 1.73 0 1.7-1.25 2.43-1.25.72-4 .72h-8.35zm41.2-13.35q2.65 0 3.72.85 1.08.85 1.08 2.9 0 1.7-1.28 2.43-1.27.72-3.97.72h-8.1v5.3l10.85.05q2.8 0 4.02.82 1.23.83 1.23 2.93 0 2.4-1.42 3.35-1.43.95-4.33.95h-16.2q-2.95 0-4.33-1.58-1.37-1.57-1.37-5.57V9.25q0-6 5.7-6h16.2q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.23 3.07-1.22.88-4.02.88h-10.9v5.85zm45.35 15.55q0 2.2-1.3 3.48-1.3 1.27-3.8 1.27-.65 0-1.3-.15t-1.38-.55q-.72-.4-1.27-.75t-1.38-1.07l-1.29-1.15q-.48-.43-1.48-1.38t-1.45-1.4l-9.15-8.65v10.85q0 2.45-.93 3.35-.92.9-2.92.9-2.2 0-3.25-1t-1.05-3.35V9q0-2.85 1.45-4.3t4.15-1.45q1.85 0 2.97.57 1.13.58 2.68 2.08l12.65 12.6V7.6q0-2.15 1.08-3.22 1.07-1.08 2.92-1.08 2.15 0 3.1 1t.95 3.25zm31.8-2.05q1.3 0 2.27-.27.98-.28 1.85-1.01.88-.72 1.43-1.92t.87-3.08q.33-1.87.33-4.42 0-2.85-.5-4.83-.5-1.97-1.45-3-.95-1.02-2.07-1.45-1.13-.42-2.73-.47zm1.5-27.4q7.8 0 12.52 4.5 4.73 4.5 4.73 12.4 0 2.55-.47 4.95-.48 2.4-1.58 4.67-1.1 2.28-2.75 3.95-1.65 1.68-4.2 2.71-2.55 1.02-5.75 1.02h-9.85q-3.05 0-4.38-1.55-1.32-1.55-1.32-5.6V9.25q0-5.95 5.7-5.95zm37.45 8.1q-2.15 0-3.17 1.25-1.03 1.25-1.03 4.45V23h8.3v-6q0-2.1-.5-3.37-.5-1.28-1.38-1.75-.87-.48-2.22-.48m4.1 18.5h-8.3v2.65q0 2.55-1.35 3.75t-4.65 1.2q-1.4 0-2.3-.4t-1.58-1.35q-.67-.95-1-2.77-.32-1.83-.5-4.41-.17-2.57-.17-6.52 0-3.45.72-6.33.73-2.87 1.95-4.87 1.23-2 2.78-3.53 1.55-1.52 3.38-2.37 1.82-.85 3.54-1.28 1.73-.42 3.48-.42 2.1 0 4.15.57 2.05.58 4.15 1.98t3.68 3.47q1.57 2.08 2.57 5.38t1 7.4q0 6.6-.48 9.77-.47 3.18-1.59 4.43-1.13 1.25-3.48 1.25-3.3 0-4.65-1.2t-1.35-3.75z" /></svg>
             </div>
           </div>
-          <div ref="tech-stack-paragraph" class="tech-stack-paragraph color--tamago">
-            <p class="sr-only">
-              Let's ride them together
-            </p>
-            <div aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 2.9 280.8 34.95"><path fill="currentcolor" d="M6.5 37.5q-2.3-.05-3.7-.73-1.4-.67-2.1-2.22T0 30.4V9.25Q0 6.6 1.55 4.92q1.55-1.67 4.1-1.67 3 0 4.43 1.1 1.42 1.1 1.42 4.45v20.05h8.55q2.9 0 4.08.85 1.17.85 1.17 3.5 0 2.7-1.35 3.5t-4.4.8zm44.35-20.3q2.65 0 3.73.85 1.07.85 1.07 2.9 0 1.7-1.27 2.43-1.28.72-3.98.72h-8.1v5.3l10.85.05q2.8 0 4.02.82 1.23.83 1.23 2.93 0 2.4-1.42 3.35-1.43.95-4.33.95h-16.2q-2.95 0-4.32-1.58-1.38-1.57-1.38-5.57V9.25q0-6 5.7-6h16.2q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.23 3.07-1.22.88-4.02.88h-10.9v5.85zM85.5 30q0 2.85-.7 4.52-.7 1.68-1.92 2.33-1.23.65-3.23.65-2.95 0-4.27-1.58-1.33-1.57-1.38-5.57l-.1-18.45h-4.25q-3.15 0-4.72-1-1.58-1-1.58-3.55 0-1.55.63-2.45.62-.9 1.87-1.27 1.25-.38 3.35-.38h21.4q2.8 0 4.05 1T95.9 7.7q0 1.65-.72 2.57-.73.93-1.93 1.28t-3.1.35H85.5zm14.9-22.35q0-1.7 1.4-2.75t4-1.05q1.7 0 3 .4t2.2 1.5.9 2.85q0 1.4-.4 2.67-.4 1.28-1.08 2.28-.67 1-1.54 1.85-.88.85-1.83 1.45t-1.9 1.03q-.95.42-1.8.62t-1.5.2q-.9 0-1.43-.53-.52-.52-.52-1.32 0-1.1.75-1.45 2.25-1.1 3.3-1.88 1.05-.77 1.85-2.07-2.35 0-3.88-.9-1.52-.9-1.52-2.9m30.95-4.75q5.95 0 10.15 2.45t4.2 5.2q0 .75-.32 1.27-.33.53-.81.75-.47.23-1.02.23-.9 0-2.7-.92-1.8-.93-4-1.86-2.2-.92-4.05-.92-2.95 0-2.95 2.4 0 .75.47 1.42.48.68 1.53 1.4 1.05.73 2.05 1.28t2.75 1.47q1.75.93 2.95 1.63 3.85 2.2 5.4 4.2t1.55 4.6q0 10.35-13.95 10.35-2.75 0-5.32-.55-2.58-.55-4.5-1.45-1.93-.9-3.4-2-1.48-1.1-2.23-2.25t-.75-2.15q0-1.1.73-1.88.72-.77 2.12-.77 1.05 0 5.05 1.33 4 1.32 6.45 1.32 2.25 0 2.25-1.55 0-.45-.18-.83-.17-.37-.6-.75-.42-.37-.94-.69-.53-.33-1.46-.83-.92-.5-1.85-1-.92-.5-2.42-1.3t-2.9-1.6q-1.85-1.05-3.18-2.6-1.32-1.55-1.92-3.08-.6-1.52-.6-2.82 0-4.2 3.75-6.85t10.65-2.65m53.3 10.3q0-2.4-1.75-3.3T177 9v8.65q3.9 0 5.77-.98 1.88-.97 1.88-3.47M177 30q0 7.5-5.85 7.5-2.95 0-4.33-1.58-1.37-1.57-1.37-5.57V9.25q0-2.9 1.57-4.43 1.58-1.52 4.13-1.52h10.5q6.15 0 9.95 2.87 3.8 2.88 3.8 7.38 0 3.4-1.43 5.33-1.42 1.92-4.57 2.82 2.4.15 4.45 2.32 2.05 2.18 2.05 5.43 0 3.3-.63 5.07-.62 1.78-1.77 2.38t-3.25.6q-2.95 0-4.33-1.23-1.37-1.22-1.37-3.72 0-3.1-.6-4.78-.6-1.67-1.55-2.17t-2.65-.5l-2.75.05zm23.6-23.3q0-1.65 1.42-2.72 1.43-1.08 4.03-1.08 5.45 0 5.45 3.8 0 2.1-1.37 2.95-1.38.85-4.08.85-2.35 0-3.9-.9t-1.55-2.9m10.85 25.45q0 3-1.25 4.18-1.25 1.17-4.4 1.17-2.95 0-4.03-1.37-1.07-1.38-1.07-4.53V19.3q0-2.55 1.37-4.1 1.38-1.55 3.68-1.55 2.7 0 4.2 1.17 1.5 1.18 1.5 4.33zm17.2-1.45q1.3 0 2.27-.27.98-.28 1.85-1.01.88-.72 1.43-1.92t.87-3.08q.33-1.87.33-4.42 0-2.85-.5-4.83-.5-1.97-1.45-3-.95-1.02-2.07-1.45-1.13-.42-2.73-.47zm1.5-27.4q7.8 0 12.52 4.5 4.73 4.5 4.73 12.4 0 2.55-.48 4.95-.47 2.4-1.57 4.67-1.1 2.28-2.75 3.95-1.65 1.68-4.2 2.71-2.55 1.02-5.75 1.02h-9.85q-3.05 0-4.38-1.55-1.32-1.55-1.32-5.6V9.25q0-5.95 5.7-5.95zm43.1 13.9q2.65 0 3.72.85 1.08.85 1.08 2.9 0 1.7-1.28 2.43-1.27.72-3.97.72h-8.1v5.3l10.85.05q2.8 0 4.02.82 1.23.83 1.23 2.93 0 2.4-1.42 3.35-1.43.95-4.33.95h-16.2q-2.95 0-4.33-1.58-1.37-1.57-1.37-5.57V9.25q0-6 5.7-6h16.2q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.23 3.07-1.22.88-4.02.88h-10.9v5.85z" /></svg>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 3.15 151.25 34.35"><path fill="currentcolor" d="M22.15 30q0 2.85-.7 4.52-.7 1.68-1.92 2.33-1.23.65-3.23.65-2.95 0-4.27-1.58-1.33-1.57-1.38-5.57l-.1-18.45H6.3q-3.15 0-4.72-1Q0 9.9 0 7.35 0 5.8.63 4.9 1.25 4 2.5 3.63q1.25-.38 3.35-.38h21.4q2.8 0 4.05 1t1.25 3.45q0 1.65-.73 2.57-.72.93-1.92 1.28t-3.1.35h-4.65zm48.4 0q0 4.05-1.45 5.77-1.45 1.73-4.4 1.73-2.9 0-4.25-1.58-1.35-1.57-1.35-5.57l-.05-5.65h-10.2V30q0 4.1-1.4 5.8T43 37.5q-2.9 0-4.25-1.58-1.35-1.57-1.35-5.57l-.15-21.1q0-3.1 1.57-4.55Q40.4 3.25 43 3.25q3 0 4.42 1.1 1.43 1.1 1.43 4.45v8.4H59V9.25q0-2.1.77-3.48.78-1.37 2-1.95 1.23-.57 2.93-.57 2.9 0 4.38 1.1 1.47 1.1 1.47 4.45zm26.4-12.8q2.65 0 3.73.85 1.07.85 1.07 2.9 0 1.7-1.27 2.43-1.28.72-3.98.72h-8.1v5.3l10.85.05q2.8 0 4.03.82 1.22.83 1.22 2.93 0 2.4-1.42 3.35-1.43.95-4.33.95h-16.2q-2.95 0-4.32-1.58-1.38-1.57-1.38-5.57V9.25q0-6 5.7-6h16.2q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.22 3.07-1.23.88-4.03.88h-10.9v5.85zm42.9 2L133.6 32q-.8 1.6-1.7 2.27-.9.68-2.15.68-1.6 0-2.7-1.12-1.1-1.13-2.85-4.08l-5.8-10.55v14.15q0 2.15-.98 3.15-.97 1-2.92 1-2.2 0-3.2-.98-1-.97-1-3.82V10.9q0-3.85 1.75-5.8t5.9-1.95q1.55 0 2.7.52 1.15.53 1.73 1.21.57.67 1.12 1.67l6.7 14.65 7.1-14.4q1.85-3.6 6.65-3.6 2.25 0 3.85.78 1.6.77 2.52 2.49.93 1.73.93 4.33v21.75q-.05 4.95-6.25 4.95-2.25 0-3.68-1.23-1.42-1.22-1.47-3.97z" /></svg>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 2.95 290.25 34.9"><path fill="currentcolor" d="M22.15 30q0 2.85-.7 4.52-.7 1.68-1.92 2.33-1.23.65-3.23.65-2.95 0-4.27-1.58-1.33-1.57-1.38-5.57l-.1-18.45H6.3q-3.15 0-4.72-1Q0 9.9 0 7.35 0 5.8.63 4.9 1.25 4 2.5 3.63q1.25-.38 3.35-.38h21.4q2.8 0 4.05 1t1.25 3.45q0 1.65-.73 2.57-.72.93-1.92 1.28t-3.1.35h-4.65zm32.35.5q1.7 0 2.92-1.5 1.23-1.5 1.75-3.7.53-2.2.53-4.7 0-2.55-.55-4.83-.55-2.27-1.77-3.87-1.23-1.6-2.88-1.6-1.6 0-2.8 1.6t-1.8 3.9-.6 4.8.58 4.7q.57 2.2 1.79 3.7 1.23 1.5 2.83 1.5m8.85 5.33-1.97.98q-1.98.99-6.9.99-4.93 0-8.85-1.97-3.93-1.98-6.28-5.93T37 20.6q0-8.1 4.88-12.88 4.87-4.77 12.62-4.77t12.65 4.77q4.9 4.78 4.9 12.88 0 5.35-2.38 9.3-2.37 3.95-6.32 5.93m33.9-24.18q0-1.55-2.05-1.55-2.1 0-3.6 2.35t-1.5 7.85q0 5.1 1.73 7.43 1.72 2.32 4.07 2.32.75 0 1.38-.3.62-.3 1.02-.9t.4-1.45q-1.2 0-2.07-.45-.88-.45-1.28-1.13-.4-.67-.4-1.47 0-1.8.95-2.7t3.25-.9h6.05q2.9 0 4.5 1.25t1.6 4.4q0 4.6-4.4 8.02-4.4 3.43-10.45 3.43-5.55 0-9.87-2-4.33-2-6.85-5.97-2.53-3.98-2.53-9.43 0-8.1 4.9-12.8t13-4.7q3.2 0 5.75.47 2.55.48 4.23 1.28 1.67.8 2.8 1.93Q109 7.75 109.48 9q.47 1.25.47 2.6 0 .95-.3 1.82-.3.88-1.07 1.75-.78.88-2.38 1.43t-3.85.55q-3.3 0-4.2-.98-.9-.97-.9-4.52m40.05 5.55q2.65 0 3.73.85 1.07.85 1.07 2.9 0 1.7-1.28 2.43-1.27.72-3.97.72h-8.1v5.3l10.85.05q2.8 0 4.03.82 1.22.83 1.22 2.93 0 2.4-1.42 3.35-1.43.95-4.33.95h-16.2q-2.95 0-4.32-1.58-1.38-1.57-1.38-5.57V9.25q0-6 5.7-6h16.2q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.22 3.07-1.23.88-4.03.88h-10.9v5.85zM171.95 30q0 2.85-.7 4.52-.7 1.68-1.93 2.33-1.22.65-3.22.65-2.95 0-4.28-1.58-1.32-1.57-1.37-5.57l-.1-18.45h-4.25q-3.15 0-4.72-1-1.58-1-1.58-3.55 0-1.55.62-2.45.63-.9 1.88-1.27 1.25-.38 3.35-.38h21.4q2.8 0 4.05 1t1.25 3.45q0 1.65-.72 2.57-.73.93-1.93 1.28t-3.1.35h-4.65zm48.4 0q0 4.05-1.45 5.77-1.45 1.73-4.4 1.73-2.9 0-4.25-1.58-1.35-1.57-1.35-5.57l-.05-5.65h-10.2V30q0 4.1-1.4 5.8t-4.45 1.7q-2.9 0-4.25-1.58-1.35-1.57-1.35-5.57l-.15-21.1q0-3.1 1.58-4.55 1.57-1.45 4.17-1.45 3 0 4.42 1.1 1.43 1.1 1.43 4.45v8.4h10.15V9.25q0-2.1.77-3.48.78-1.37 2-1.95 1.23-.57 2.93-.57 2.9 0 4.38 1.1 1.47 1.1 1.47 4.45zm26.4-12.8q2.65 0 3.72.85 1.08.85 1.08 2.9 0 1.7-1.28 2.43-1.27.72-3.97.72h-8.1v5.3l10.85.05q2.8 0 4.02.82 1.23.83 1.23 2.93 0 2.4-1.42 3.35-1.43.95-4.33.95h-16.2q-2.95 0-4.33-1.58-1.37-1.57-1.37-5.57V9.25q0-6 5.7-6h16.2q2.9 0 4.33.9 1.42.9 1.42 3.25 0 2.2-1.23 3.07-1.22.88-4.02.88h-10.9v5.85zm32.25-4q0-2.4-1.75-3.3t-5.9-.9v8.65q3.9 0 5.78-.98Q279 15.7 279 13.2M271.35 30q0 7.5-5.85 7.5-2.95 0-4.32-1.58-1.38-1.57-1.38-5.57V9.25q0-2.9 1.58-4.43 1.57-1.52 4.12-1.52H276q6.15 0 9.95 2.87 3.8 2.88 3.8 7.38 0 3.4-1.43 5.33-1.42 1.92-4.57 2.82 2.4.15 4.45 2.32 2.05 2.18 2.05 5.43 0 3.3-.62 5.07-.63 1.78-1.78 2.38t-3.25.6q-2.95 0-4.32-1.23-1.38-1.22-1.38-3.72 0-3.1-.6-4.78-.6-1.67-1.55-2.17t-2.65-.5l-2.75.05z" /></svg>
-            </div>
-          </div>
         </div>
-        <div
-          ref="tech-stack-wrapper"
-          class="cards-wrapper layout-stack-block"
-        >
-          <div
-            ref="tech-stack-gallery"
-            class="cards"
-          >
+      </div>
+      <div ref="techstack-pin-container--cards" class="techstack-pin-container techstack-pin-container--cards">
+        <div ref="techstack-pin--cards" class="techstack-pin techstack-pin--cards layout-stack-block">
+          <div ref="techstack-cards" class="techstack-cards">
             <div class="card card--html">
               <h3>HTML</h3>
               <div class="card-img-container">
@@ -188,62 +183,67 @@ onUnmounted(() => ctx.revert())
           </div>
         </div>
       </div>
+      <div ref="techstack-pin-container--paragraph" class="techstack-pin-container techstack-pin-container--paragraph">
+        <div ref="techstack-pin--paragraph" class="techstack-pin--paragraph layout-stack-block color--tamago">
+          <div class="techstack-line-container">
+            <p>Let's ride them together!</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <style>
-.tech-stack {
+.techstack {
   background-color: transparent;
-  block-size: 600vh;
 }
 
-.tech-stack-inner {
+.techstack-inner {
+  position: relative;
+}
+
+.techstack-pin--headline {
+  block-size: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.techstack-headline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.techstack-pin-container--cards {
+  position: relative;
+}
+
+.techstack-pin--cards {
   position: relative;
   block-size: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.tech-stack-text-wrapper {
+.techstack-pin-container--paragraph {
   position: relative;
-  width: 100%;
-  height: 100%;
-  inset: 0;
+  block-size: 300vh;
+}
+
+.techstack-pin--paragraph {
+  position: relative;
+  block-size: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
-.tech-stack-text-wrapper h2,
-.tech-stack-text-wrapper p {
-  width: 100%;
-}
-
-.tech-stack-paragraph {
-  position: absolute;
-  width: 100%;
-  inset: 0;
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.cards-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
-}
-
-.p-wrapper {
-  visibility: hidden;
-  display: none;
-}
-
-.cards {
+.techstack-cards {
   display: flex;
   width: max-content;
   white-space: nowrap;
@@ -345,5 +345,19 @@ onUnmounted(() => ctx.revert())
 .card--gsap {
   color: var(--color--shiro);
   border-color: #7fbff2;
+}
+
+.techstack-line-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.techstack-line-container > p {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 </style>
