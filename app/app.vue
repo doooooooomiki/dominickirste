@@ -31,16 +31,34 @@ const setupGsap = () => {
 onMounted(() => setupGsap())
 
 onUnmounted(() => ctx.revert())
+
+const firstWave = ref(false)
+const secondWave = ref(false)
+const thirdWave = ref(false)
+
+const isSleepingGroundWavesAreMeantToBeSurfed = ref(false)
 </script>
 
 <template>
   <NuxtRouteAnnouncer />
+  <CanvasDrawings
+    :first-wave="firstWave"
+    :second-wave="secondWave"
+    :third-wave="thirdWave"
+    :is-sleeping-ground-waves-are-meant-to-be-surfed="isSleepingGroundWavesAreMeantToBeSurfed"
+  />
   <div ref="smooth-wrapper">
-    <div ref="smooth-content" class="background--gradient">
+    <div ref="smooth-content">
       <main class="layout-stack main">
         <SectionHero />
-        <SectionIntroduction />
-        <SectionTechStack />
+        <SectionIntroduction
+          @first-wave="firstWave = true"
+          @second-wave="secondWave = true"
+          @third-wave="thirdWave = true"
+        />
+        <SectionTechStack
+          @is-sleeping-ground-waves-are-meant-to-be-surfed="isSleepingGroundWavesAreMeantToBeSurfed = true"
+        />
       </main>
       <SectionOutro />
     </div>

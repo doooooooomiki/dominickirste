@@ -3,6 +3,10 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 
+const emit = defineEmits<{
+  'is-sleeping-ground-waves-are-meant-to-be-surfed': [boolean]
+}>()
+
 const techstack = useTemplateRef('techstack')
 const inner = useTemplateRef('techstack-inner')
 
@@ -97,6 +101,7 @@ const setupGsap = () => {
         end: 'bottom bottom',
         scrub: true,
         invalidateOnRefresh: true,
+        onEnter: () => emit('is-sleeping-ground-waves-are-meant-to-be-surfed', true),
       },
       autoAlpha: 0,
       stagger: 0.2,

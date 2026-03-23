@@ -9,6 +9,12 @@ const home = useTemplateRef('home')
 const handshake = useTemplateRef('handshake')
 let ctx: gsap.Context
 
+const emit = defineEmits<{
+  'first-wave': [boolean]
+  'second-wave': [boolean]
+  'third-wave': [boolean]
+}>()
+
 const setupGsap = () => {
   if (!inner.value || !content.value || !hi.value || !home.value || !handshake.value) return
 
@@ -31,6 +37,7 @@ const setupGsap = () => {
         end: 'bottom bottom',
         scrub: true,
         invalidateOnRefresh: true,
+        onEnter: () => emit('first-wave', true),
       },
     })
       .to(splitHi.words, {
@@ -43,9 +50,9 @@ const setupGsap = () => {
       .from(splitHome.words, {
         autoAlpha: 0,
         stagger: 0.2,
-        ease: 'back',
         rotation: 'random(-24, 24)',
         duration: 1,
+        onComplete: () => emit('second-wave', true),
       })
       .to(splitHome.words, {
         autoAlpha: 0,
@@ -60,6 +67,7 @@ const setupGsap = () => {
         ease: 'back',
         rotation: 'random(-24, 24)',
         duration: 1,
+        onStart: () => emit('third-wave', true),
       })
   }, inner.value)
 }
@@ -73,7 +81,6 @@ onUnmounted(() => ctx.revert())
   <section class="introduction">
     <div ref="introduction-inner" class="introduction-inner layout-center">
       <div ref="introduction-content" class="introduction-content layout-stack-block">
-        <LayerEmojis />
         <div ref="hi" class="introduction-line-container introduction-line-container--hi">
           <p>Hi. <br> Mein Name ist Dominic</p>
         </div>
