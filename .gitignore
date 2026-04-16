@@ -1,0 +1,92 @@
+# System files
+# ------------
+
+Icon
+.DS_Store
+
+# Temporary files
+# ---------------
+
+public/media/*
+!public/media/.gitkeep
+media/*
+!media/.gitkeep
+.dev
+.tmp
+hot
+
+# Lock files
+# ---------------
+
+.lock
+
+# Dependencies
+# ---------------
+
+kirby
+vendor
+node_modules
+site/plugins/*
+!site/plugins/.gitkeep
+
+# Build files
+# ---------------
+
+build
+public/build
+public/assets/build
+dist
+public/dist
+public/assets/dist
+
+# Editors
+# (sensitive workspace files)
+# ---------------------------
+*.sublime-workspace
+.vscode
+.idea
+
+# -------------SECURITY-------------
+# NEVER publish these files via Git!
+# -------------SECURITY-------------
+
+# Cache Files
+# ---------------
+
+site/cache/*
+!site/cache/.gitkeep
+
+storage/cache/*
+!storage/cache/.gitkeep
+
+# Accounts
+# ---------------
+
+site/accounts/*
+!site/accounts/.gitkeep
+
+storage/accounts/*
+!storage/accounts/.gitkeep
+
+# Sessions
+# ---------------
+
+site/sessions/*
+!site/sessions/.gitkeep
+
+storage/sessions/*
+!storage/sessions/.gitkeep
+
+# Content
+# ---------------
+
+site/content/*
+!site/content/.gitkeep
+
+storage/content/*
+!storage/content/.gitkeep
+
+# License
+# ---------------
+
+site/config/.license

@@ -1,0 +1,25 @@
+title:
+  de: Seite
+  en: Site
+
+
+tabs:
+  pages:
+    label: Pages
+    icon: page
+    columns:
+      - width: 2/3
+        sections:
+          pages:
+            label: Pages
+            type: pages
+            info: "/{{ page.slug }}"
+            create:
+              - layout
+            templates:
+              - home
+              - error
+              - layout
+            image: icon
+  navigation: tabs/navigation
+  seo: seo/site
